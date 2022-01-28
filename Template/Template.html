@@ -8,8 +8,8 @@
   <script src="Fudge/FudgeCore.js"></script>
   <script src="FudgeStory/FudgeStory.js"></script>
   <script src="./Build/Template.js"></script>
-  <title>Fudge Story Template</title>
-  <splash src="Images/bean.png"/>
+  <title>Ovajeh Istomeph</title>
+  <splash src="Images/bean.webp"/>
 </head>
 
 <body>
@@ -17,13 +17,30 @@
     <canvas></canvas>
 
     <speech>
-      <name>The name of the character speaking</name>
-      <content>The text the character says</content>
+      <!--Character speaking-->
+      <name></name>
+      <!--Text-->
+      <content></content>
     </speech>
-
+    
     <dialog type="text">
       The content of a page of text for reading
     </dialog>
+    
+    <dialog type="inventory">
+      <button type="button" id="inv">close</button>
+      <p id="pagecount">Anzahl Seiten</p>
+      <p id="combo"></p>
+      <ul id="items"></ul>
+    </dialog>
+
+    <div type="interface">
+      <input name="a" type="text" disabled/>
+      <input name="b" type="text" disabled/>
+      <meter name="a" min="0" max="100" disabled></meter>
+      <meter name="b" min="0" max="100" disabled></meter>
+      <button onclick= "Template.randomItem()">Item</button>
+    </div>
   </scene>
 </body>
 
