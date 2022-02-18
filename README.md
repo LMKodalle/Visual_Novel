@@ -8,16 +8,19 @@ A FUDGE module for the easy development of interactive stories, visual novels an
 ## Bewertungskriterien
 © Prof. Dipl.-Ing. Jirka R. Dell'Oro-Friedl, HFU
 
+## Hinweise
+- Bitte mit der Leertaste Dialoge weiterdrücken oder ganz links oder rechts am Bildrand klicken
+- Browserfenster maximieren und Console weg
+- Steuerung ist unter dem Spielmenü unter Controls nochmal erklärt
+- Im Inventar E = Examine, U = Use, C = Combine benutzen, während man übers Item hovered
+- Mit C das gehoverte Item in Kombi Modus versetzen, dann auf ein Item zum Kombinieren mit der Maus klicken
+- Mit U Item in Use Modus versetzen, funktioniert im Inventar nur auf Items, die damit benutzt werden können / 
+  ansonsten mit I oder ESC aus dem Inventar heraus und auf Stelle klicken (Tür o.ä.) 
+
 ##  Links
 - [Code](https://github.com/LMKodalle/Visual_Novel/blob/main/Ovajeh%20Istomeph/Build/Ovajeh%20Istomeph.js)
 - [Konzept](https://github.com/LMKodalle/Visual_Novel/blob/main/Konzept_Kriterien_VN_Kodalle.pdf)
-- [Visual Novel](https://github.com/LMKodalle/Visual_Novel/blob/main/Ovajeh%20Istomeph/Ovajeh%20Istomeph.html)
+- [Visual Novel](https://github.com/LMKodalle/Visual_Novel/blob/main/Ovajeh%20Istomeph/Ovajeh%20Istomeph)
 
-##  Abgabeformat
+##  Archiv
 
-* Die Konzeption soll als .pdf-Dokument abgegeben werden.
-* Platziere einen Link in der Readme-Datei deines VisualNovel-Repositories auf Github auf die fertige und in Github-Pages lauffähige Anwendung.
-* Platziere ebenso Links zu den Stellen in deinem Repository, an denen der Quellcode und das Konzept-Dokument zu finden sind.
-* Stelle zudem auf diese Art dort auch ein gepacktes Archiv zur Verfügung, welches folgende Daten enthält
-  * Das Konzept-Dokument 
-  * Die Projektordner inklusive aller erforderlichen Dateien, also auch Bild- und Audiodaten
