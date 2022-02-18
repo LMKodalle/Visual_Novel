@@ -20,7 +20,7 @@ A FUDGE module for the easy development of interactive stories, visual novels an
 ##  Links
 - [Code](https://github.com/LMKodalle/Visual_Novel/blob/main/Ovajeh%20Istomeph/Build/Ovajeh%20Istomeph.js)
 - [Konzept](https://github.com/LMKodalle/Visual_Novel/blob/main/Konzept_Kriterien_VN_Kodalle.pdf)
-- [Visual Novel](https://github.com/LMKodalle/Visual_Novel/blob/main/Ovajeh%20Istomeph/Ovajeh%20Istomeph)
+- [Visual Novel](https://github.com/LMKodalle/Visual_Novel/blob/main/Ovajeh%20Istomeph/Ovajeh%20Istomeph/)
 
 ##  Archiv
 
