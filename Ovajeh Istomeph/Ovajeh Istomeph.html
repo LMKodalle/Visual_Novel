@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="Ovajeh Istomeph.css">
+  <link href="/Ovajeh Istomeph/dist/rpgui.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+  <script src="/Ovajeh Istomeph/dist/rpgui.min.js"></script>
+  <script src="Fudge/FudgeCore.js"></script>
+  <script src="FudgeStory/FudgeStory.js"></script>
+  <script src="./Build/Ovajeh Istomeph.js"></script>
+  <title>Ovajeh Istomeph</title>
+  <splash src="Images/Backgrounds/iso1.gif" />
+</head>
+
+<body>
+  <scene id="scene">
+    <canvas id="canv"></canvas>
+
+    <div class="rpgui-content">
+      <speech name="speech">
+        <div class="rpgui-container framed-golden" style="width: 100%; height: 10vh;">
+          <!--Character speaking-->
+          <name></name>
+          <!--Text-->
+          <content id="content"></content>
+        </div>
+      </speech>
+
+      <dialog type="text">
+        The content of a page of text for reading
+      </dialog>
+
+      <dialog type="inventory" class="rpgui-container framed" style="width: 80%; height: 80%">
+        <button type="button" id="inv">Close</button>
+        <button type="button" id="char">Charakter</button>
+        <p id="pagecount">Anzahl Seiten</p>
+        <p id="combo"></p>
+        <div id="controls">
+          <p id="combine">Combine: C</p>
+          <p id="use">Use: U</p>
+          <p id="examine">Examine: E</p>
+        </div>
+        <ul id="items"></ul>
+        <div id="weapon-slot" class="rpgui-icon weapon-slot"></div>
+      </dialog>
+
+      <div name="div" class="rpgui-container framed" type="interface" style="width: 60%; height: 30%; padding: 20px; bottom: 60%;">
+        <input id="input1" name="input" type="text" disabled />
+
+        <div id="herobar" style="padding-left: 10px;">
+          <p><span id="hero-sp" style="color: #fcedd8;text-shadow: 2px 2px 2px black;">Schild</span></p>
+          <meter name="meter" id="heroshield" min="0" max="100" value="100" disabled></meter>
+          <p><span id="hero-hp" style="color: #fcedd8; text-shadow: 2px 2px 2px black;">Leben</span></p>
+          <meter name="meter" id="herohealth" min="0" max="100" value="100" disabled></meter>
+        </div>
+        <div id="enemybar" style="padding-right: 10px;">
+          <p><span id="enemy-sp" style="color: #fcedd8; text-shadow: 2px 2px 2px black;">Schild</span></p>
+          <meter name="meter" id="enemyshield" min="0" max="100" value="100" disabled></meter>
+          <p><span id="enemy-hp" style="color: #fcedd8; text-shadow: 2px 2px 2px black;">Leben</span></p>
+          <meter name="meter" id="enemyhealth" min="0" max="100" value="100" disabled></meter>
+        </div>
+
+      </div>
+
+    </div>
+  </scene>
+</body>
+
+</html>
