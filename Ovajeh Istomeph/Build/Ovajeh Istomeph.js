@@ -1119,6 +1119,8 @@ var Ovajeh;
     Ovajeh.counter = 0;
     Ovajeh.enemyArray = [];
     Ovajeh.weapon_Class_Array = [];
+    let combine;
+    let use;
     function closeUI() {
         document.getElementsByName("div").forEach(meterStuff => meterStuff.hidden = true);
         document.getElementsByName("speech").forEach(meterStuff => meterStuff.hidden = true);
@@ -1278,12 +1280,11 @@ var Ovajeh;
         if (_event) {
             Ovajeh.statusInventory = false;
             console.log(Ovajeh.statusInventory);
-            document.getElementById("combo").innerHTML = "";
             mapListeners();
+            combine = undefined;
             if (Ovajeh.currentScene == "combat") {
                 combat();
             }
-            Ovajeh.selectedItemArray.shift();
         }
     }
     Ovajeh.clickInventory = clickInventory;
@@ -1781,366 +1782,325 @@ var Ovajeh;
     }
     Ovajeh.numberCodeCheck = numberCodeCheck;
     async function hndItem(_event) {
-        let itemsChild = document.getElementById("items").children;
-        let iC_length = itemsChild.length;
-        if (use == undefined) {
-            if (_event.type == "pointerup") {
-                //console.log(_event);
-                switch (_event.detail) {
+        // let itemsChild = document.getElementById("items").children;
+        if (_event.type == "pointerup") {
+            //console.log(_event);
+            if (combine == undefined) {
+                if (use == undefined) {
+                    switch (_event.detail) {
+                        case "Seite 1":
+                        case "Seite 2":
+                        case "Seite 3":
+                        case "Seite 4":
+                        case "Seite 5":
+                        case "Seite 6":
+                            console.log(Number(_event.detail.substring(6, 7)));
+                            Ovajeh.ƒS.Text.print(Ovajeh.pages[Number(_event.detail.substring(6, 7))]);
+                            break;
+                        case `${Ovajeh.items.Asche.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Asche.text);
+                            break;
+                        case `${Ovajeh.items.Blut.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Blut.text);
+                            break;
+                        case `${Ovajeh.items.Blutsfeder.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Blutsfeder.text);
+                            break;
+                        case `${Ovajeh.items.Buch.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Buch.text);
+                            break;
+                        case `${Ovajeh.items.Code.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.save.code);
+                            break;
+                        case `${Ovajeh.items.Fackel.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Fackel.text);
+                            break;
+                        case `${Ovajeh.items.Feder.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Feder.text);
+                            break;
+                        case `${Ovajeh.items.Kaminteil.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Kaminteil.text);
+                            break;
+                        case `${Ovajeh.items.Lampenteil.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Lampenteil.text);
+                            break;
+                        case `${Ovajeh.items.Notiz.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Notiz.text);
+                            break;
+                        case `${Ovajeh.items.Opferfackel.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Opferfackel.text);
+                            break;
+                        case `${Ovajeh.items.Reißzwecke.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Reißzwecke.text);
+                            break;
+                        case `${Ovajeh.items.Scherbe.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Scherbe.text);
+                            break;
+                        case `${Ovajeh.items.Schlüssel.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Schlüssel.text);
+                            break;
+                        case `${Ovajeh.items.Spiegelessenz.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Spiegelessenz.text);
+                            break;
+                        case `${Ovajeh.items.Stuhlbein.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Stuhlbein.text);
+                            break;
+                        case `${Ovajeh.items.Stoff.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Stoff.text);
+                            break;
+                        case `${Ovajeh.items.Taschenuhr.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Taschenuhr.text);
+                            break;
+                        case `${Ovajeh.items.Zahn.name}`:
+                            Ovajeh.ƒS.Text.print(Ovajeh.items.Zahn.text);
+                            break;
+                    }
+                }
+                else {
+                    switch (use) {
+                        case `${Ovajeh.items.Asche.name}`:
+                        case `${Ovajeh.items.Blut.name}`:
+                        case `${Ovajeh.items.Buch.name}`:
+                        case `${Ovajeh.items.Code.name}`:
+                        case `${Ovajeh.items.Feder.name}`:
+                        case `${Ovajeh.items.Kaminteil.name}`:
+                        case `${Ovajeh.items.Lampenteil.name}`:
+                        case `${Ovajeh.items.Notiz.name}`:
+                        case `${Ovajeh.items.Opferfackel.name}`:
+                        case `${Ovajeh.items.Reißzwecke.name}`:
+                        case `${Ovajeh.items.Scherbe.name}`:
+                        case `${Ovajeh.items.Schlüssel.name}`:
+                        case `${Ovajeh.items.Spiegelessenz.name}`:
+                        case `${Ovajeh.items.Stuhlbein.name}`:
+                        case `${Ovajeh.items.Stoff.name}`:
+                        case `${Ovajeh.items.Taschenuhr.name}`:
+                        case `${Ovajeh.items.Zahn.name}`:
+                        case "Seite 1":
+                        case "Seite 2":
+                        case "Seite 3":
+                        case "Seite 4":
+                        case "Seite 5":
+                        case "Seite 6":
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${use} kann nicht mit ${_event.detail} benutzt werden<hr class="golden"></hr>`);
+                            use = undefined;
+                            break;
+                        case `${Ovajeh.items.Blutsfeder.name}`:
+                            if (_event.detail == `${Ovajeh.items.Fackel.name}`) {
+                                sfx("complete");
+                                document.getElementById("Blutsfeder").remove();
+                                document.getElementById("Fackel").remove();
+                                await Ovajeh.ƒS.Text.print(`Erstellt: ${Ovajeh.items.Opferfackel.name}<hr class="golden"></hr><br> + 30 XP`);
+                                Ovajeh.ƒS.Inventory.add(Ovajeh.items.Opferfackel);
+                                Ovajeh.save.protagonist.experience += 30;
+                                checkExperience();
+                            }
+                            if (_event.detail == use) {
+                                sfx("no");
+                                await Ovajeh.ƒS.Text.print(`${use} nicht mit sich selbst benutzbar<hr class="golden"></hr>`);
+                            }
+                            if (_event.detail !== `${Ovajeh.items.Fackel.name}`) {
+                                sfx("no");
+                                await Ovajeh.ƒS.Text.print(`${_event.detail} nicht mit ${Ovajeh.items.Blutsfeder.name} benutzbar<hr class="golden"></hr>`);
+                            }
+                            use = undefined;
+                            break;
+                        case `${Ovajeh.items.Fackel.name}`:
+                            if (_event.detail == `${Ovajeh.items.Blutsfeder.name}`) {
+                                sfx("complete");
+                                document.getElementById("Blutsfeder").remove();
+                                document.getElementById("Fackel").remove();
+                                await Ovajeh.ƒS.Text.print(`Erstellt: ${Ovajeh.items.Opferfackel.name}<hr class="golden"></hr><br> + 30 XP`);
+                                Ovajeh.ƒS.Inventory.add(Ovajeh.items.Opferfackel);
+                                Ovajeh.save.protagonist.experience += 30;
+                                checkExperience();
+                            }
+                            if (_event.detail == use) {
+                                sfx("no");
+                                await Ovajeh.ƒS.Text.print(`${use} nicht mit sich selbst benutzbar<hr class="golden"></hr>`);
+                            }
+                            if (_event.detail !== `${Ovajeh.items.Blutsfeder.name}`) {
+                                sfx("no");
+                                await Ovajeh.ƒS.Text.print(`${_event.detail} nicht mit ${Ovajeh.items.Fackel.name} benutzbar<hr class="golden"></hr>`);
+                            }
+                            use = undefined;
+                            break;
+                    }
+                }
+            }
+            else {
+                switch (combine) {
+                    case `${Ovajeh.items.Asche.name}`:
+                    case `${Ovajeh.items.Blutsfeder.name}`:
+                    case `${Ovajeh.items.Buch.name}`:
+                    case `${Ovajeh.items.Code.name}`:
+                    case `${Ovajeh.items.Fackel.name}`:
+                    case `${Ovajeh.items.Notiz.name}`:
+                    case `${Ovajeh.items.Opferfackel.name}`:
+                    case `${Ovajeh.items.Reißzwecke.name}`:
+                    case `${Ovajeh.items.Scherbe.name}`:
+                    case `${Ovajeh.items.Schlüssel.name}`:
+                    case `${Ovajeh.items.Spiegelessenz.name}`:
+                    case `${Ovajeh.items.Taschenuhr.name}`:
+                    case `${Ovajeh.items.Zahn.name}`:
+                        sfx("no");
+                        await Ovajeh.ƒS.Text.print(`${combine} kann nicht mit ${_event.detail} kombininiert werden<hr class="golden"></hr>`);
+                        combine = undefined;
+                        break;
+                    case `${Ovajeh.items.Blut.name}`:
+                        if (_event.detail == `${Ovajeh.items.Feder.name}`) {
+                            sfx("complete");
+                            document.getElementById("Blut").remove();
+                            document.getElementById("Feder").remove();
+                            await Ovajeh.ƒS.Text.print(`Erstellt: ${Ovajeh.items.Blutsfeder.name}<hr class="golden"></hr><br> + 20 XP`);
+                            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Blutsfeder);
+                            Ovajeh.save.protagonist.experience += 20;
+                            checkExperience();
+                        }
+                        if (_event.detail == combine) {
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${combine} nicht mit sich selbst kombinierbar<hr class="golden"></hr>`);
+                        }
+                        if (_event.detail !== `${Ovajeh.items.Feder.name}`) {
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${_event.detail} nicht mit ${Ovajeh.items.Blut.name} kombinierbar<hr class="golden"></hr>`);
+                        }
+                        combine = undefined;
+                        break;
+                    case `${Ovajeh.items.Feder.name}`:
+                        if (_event.detail == `${Ovajeh.items.Blut.name}`) {
+                            sfx("complete");
+                            document.getElementById("Feder").remove();
+                            document.getElementById("Blut").remove();
+                            await Ovajeh.ƒS.Text.print(`Erstellt: ${Ovajeh.items.Blutsfeder.name}<hr class="golden"></hr><br> + 20 XP`);
+                            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Blutsfeder);
+                            Ovajeh.save.protagonist.experience += 20;
+                            checkExperience();
+                        }
+                        if (_event.detail == combine) {
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${combine} nicht mit sich selbst kombinierbar<hr class="golden"></hr>`);
+                        }
+                        if (_event.detail !== `${Ovajeh.items.Blut.name}`) {
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${_event.detail} nicht mit ${Ovajeh.items.Feder.name} kombinierbar<hr class="golden"></hr>`);
+                        }
+                        combine = undefined;
+                        break;
+                    case `${Ovajeh.items.Kaminteil.name}`:
+                        if (_event.detail == `${Ovajeh.items.Lampenteil.name}`) {
+                            sfx("complete");
+                            document.getElementById("Kaminteil").remove();
+                            document.getElementById("Lampenteil").remove();
+                            await Ovajeh.ƒS.Text.print(`Erstellt: ${Ovajeh.items.Schlüssel.name}<hr class="golden"></hr><br> + 20 XP`);
+                            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Schlüssel);
+                            Ovajeh.save.protagonist.experience += 20;
+                            checkExperience();
+                            Ovajeh.gotKey = true;
+                        }
+                        if (_event.detail == combine) {
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${combine} nicht mit sich selbst kombinierbar<hr class="golden"></hr>`);
+                        }
+                        if (_event.detail !== `${Ovajeh.items.Lampenteil.name}`) {
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${_event.detail} nicht mit ${Ovajeh.items.Kaminteil.name} kombinierbar<hr class="golden"></hr>`);
+                        }
+                        combine = undefined;
+                        break;
+                    case `${Ovajeh.items.Lampenteil.name}`:
+                        if (_event.detail == `${Ovajeh.items.Kaminteil.name}`) {
+                            sfx("complete");
+                            document.getElementById("Lampenteil").remove();
+                            document.getElementById("Kaminteil").remove();
+                            await Ovajeh.ƒS.Text.print(`Erstellt: ${Ovajeh.items.Schlüssel.name}<hr class="golden"></hr><br> + 20 XP`);
+                            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Schlüssel);
+                            Ovajeh.save.protagonist.experience += 20;
+                            checkExperience();
+                            Ovajeh.gotKey = true;
+                        }
+                        if (_event.detail == combine) {
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${combine} nicht mit sich selbst kombinierbar<hr class="golden"></hr>`);
+                        }
+                        if (_event.detail !== `${Ovajeh.items.Kaminteil.name}`) {
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${_event.detail} nicht mit ${Ovajeh.items.Lampenteil.name} kombinierbar<hr class="golden"></hr>`);
+                        }
+                        combine = undefined;
+                        break;
+                    case `${Ovajeh.items.Stuhlbein.name}`:
+                        if (_event.detail == `${Ovajeh.items.Fackel.name}`) {
+                            sfx("complete");
+                            document.getElementById("Stuhlbein").remove();
+                            document.getElementById("Stoff").remove();
+                            await Ovajeh.ƒS.Text.print(`Erstellt: ${Ovajeh.items.Fackel.name}<hr class="golden"></hr><br> + 20 XP`);
+                            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Fackel);
+                            Ovajeh.save.protagonist.experience += 20;
+                            checkExperience();
+                        }
+                        if (_event.detail == combine) {
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${combine} nicht mit sich selbst kombinierbar<hr class="golden"></hr>`);
+                        }
+                        if (_event.detail !== `${Ovajeh.items.Stoff.name}`) {
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${_event.detail} nicht mit ${Ovajeh.items.Stuhlbein.name} kombinierbar<hr class="golden"></hr>`);
+                        }
+                        combine = undefined;
+                        break;
+                    case `${Ovajeh.items.Stoff.name}`:
+                        if (_event.detail == `${Ovajeh.items.Stuhlbein.name}`) {
+                            sfx("complete");
+                            document.getElementById("Stoff").remove();
+                            document.getElementById("Stuhlbein").remove();
+                            await Ovajeh.ƒS.Text.print(`Erstellt: ${Ovajeh.items.Fackel.name}<hr class="golden"></hr><br> + 20 XP`);
+                            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Fackel);
+                            Ovajeh.save.protagonist.experience += 20;
+                            checkExperience();
+                        }
+                        if (_event.detail == combine) {
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${combine} nicht mit sich selbst kombinierbar<hr class="golden"></hr>`);
+                        }
+                        if (_event.detail !== `${Ovajeh.items.Stuhlbein.name}`) {
+                            sfx("no");
+                            await Ovajeh.ƒS.Text.print(`${_event.detail} nicht mit ${Ovajeh.items.Stoff.name} kombinierbar<hr class="golden"></hr>`);
+                        }
+                        combine = undefined;
+                        break;
                     case "Seite 1":
                     case "Seite 2":
                     case "Seite 3":
                     case "Seite 4":
                     case "Seite 5":
                     case "Seite 6":
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            console.log(Number(_event.detail.substring(6, 7)));
-                            Ovajeh.ƒS.Text.print(Ovajeh.pages[Number(_event.detail.substring(6, 7))]);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            for (let i = 0; i < document.getElementById("items").children.length; i++) {
-                                if (_event.detail == `Seite ${i}`) {
-                                    console.log(`... with Seite ${i}`);
-                                    if (Ovajeh.selectedItemArray[0] != _event.detail) {
-                                        if (Ovajeh.save.pagecount == 6) {
-                                            while (iC_length--) {
-                                                switch (itemsChild[iC_length].id) {
-                                                    case "Seite_1":
-                                                    case "Seite_2":
-                                                    case "Seite_3":
-                                                    case "Seite_4":
-                                                    case "Seite_5":
-                                                    case "Seite_6":
-                                                        itemsChild[iC_length].remove();
-                                                        break;
-                                                }
-                                            }
-                                            document.getElementById("combo").innerHTML = "Erstellt: Code";
-                                            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Code);
-                                            Ovajeh.save.protagonist.experience += 20;
-                                            checkExperience();
-                                            sfx("complete");
-                                            await Ovajeh.ƒS.Text.print("Code dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>20</span> XP</p>");
-                                        }
-                                    }
-                                }
-                                else {
-                                    sfx("no");
-                                    document.getElementById("combo").innerHTML = "Nicht mit sich selbst kombinierbar";
-                                    Ovajeh.selectedItemArray.splice(0, Ovajeh.selectedItemArray.length);
-                                }
-                            }
-                        }
-                        break;
-                    case `${Ovajeh.items.Code.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.save.code);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Buch.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Buch.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Taschenuhr.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Taschenuhr.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Notiz.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Notiz.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Asche.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Asche.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Spiegelessenz.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Spiegelessenz.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Blut.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Blut.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            console.log(`... with ${_event.detail}`);
-                            if (Ovajeh.selectedItemArray[0] != _event.detail) {
-                                if (Ovajeh.selectedItemArray[0] == "Feder") {
-                                    document.getElementById("Blut").remove();
-                                    document.getElementById("Feder").remove();
-                                    document.getElementById("combo").innerHTML = "Erstellt: Blutsfeder";
-                                    Ovajeh.ƒS.Inventory.add(Ovajeh.items.Blutsfeder);
-                                    Ovajeh.save.protagonist.experience += 20;
-                                    checkExperience();
-                                    sfx("complete");
-                                    await Ovajeh.ƒS.Text.print("Blutsfeder dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>20</span> XP</p>");
-                                }
-                            }
-                            else {
-                                sfx("no");
-                                document.getElementById("combo").innerHTML = "Nicht mit sich selbst kombinierbar";
-                                Ovajeh.selectedItemArray.splice(0, Ovajeh.selectedItemArray.length);
-                            }
-                        }
-                        break;
-                    case `${Ovajeh.items.Fackel.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Fackel.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Feder.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Feder.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            console.log(`... with ${_event.detail}`);
-                            if (Ovajeh.selectedItemArray[0] != _event.detail) {
-                                if (Ovajeh.selectedItemArray[0] == "Blut") {
-                                    document.getElementById("Blut").remove();
-                                    document.getElementById("Feder").remove();
-                                    document.getElementById("combo").innerHTML = "Erstellt: Blutsfeder";
-                                    Ovajeh.ƒS.Inventory.add(Ovajeh.items.Blutsfeder);
-                                    Ovajeh.save.protagonist.experience += 20;
-                                    checkExperience();
-                                    sfx("complete");
-                                    await Ovajeh.ƒS.Text.print("Blutsfeder dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>20</span> XP</p>");
-                                }
-                            }
-                            else {
-                                sfx("no");
-                                document.getElementById("combo").innerHTML = "Nicht mit sich selbst kombinierbar";
-                                Ovajeh.selectedItemArray.splice(0, Ovajeh.selectedItemArray.length);
-                            }
-                        }
-                        break;
-                    case `${Ovajeh.items.Blutsfeder.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Blutsfeder.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Opferfackel.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Opferfackel.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Kaminteil.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Kaminteil.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            console.log(`... with ${_event.detail}`);
-                            if (Ovajeh.selectedItemArray[0] != _event.detail) {
-                                if (Ovajeh.selectedItemArray[0] == "Lampenteil") {
-                                    document.getElementById("Kaminteil").remove();
-                                    document.getElementById("Lampenteil").remove();
-                                    document.getElementById("combo").innerHTML = "Erstellt: Schlüssel";
-                                    Ovajeh.ƒS.Inventory.add(Ovajeh.items.Schlüssel);
-                                    Ovajeh.gotKey = true;
-                                    Ovajeh.save.protagonist.experience += 20;
-                                    checkExperience();
-                                    sfx("complete");
-                                    await Ovajeh.ƒS.Text.print("Schlüssel dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>20</span> XP</p>");
-                                }
-                            }
-                            else {
-                                sfx("no");
-                                document.getElementById("combo").innerHTML = "Nicht mit sich selbst kombinierbar";
-                                Ovajeh.selectedItemArray.splice(0, Ovajeh.selectedItemArray.length);
-                            }
-                        }
-                        break;
-                    case `${Ovajeh.items.Lampenteil.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Lampenteil.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            console.log(`... with ${_event.detail}`);
-                            if (Ovajeh.selectedItemArray[0] != _event.detail) {
-                                if (Ovajeh.selectedItemArray[0] == "Kaminteil") {
-                                    document.getElementById("Kaminteil").remove();
-                                    document.getElementById("Lampenteil").remove();
-                                    document.getElementById("combo").innerHTML = "Erstellt: Schlüssel";
-                                    Ovajeh.ƒS.Inventory.add(Ovajeh.items.Schlüssel);
-                                    Ovajeh.gotKey = true;
-                                    Ovajeh.save.protagonist.experience += 20;
-                                    checkExperience();
-                                    sfx("complete");
-                                    await Ovajeh.ƒS.Text.print("Schlüssel dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>20</span> XP</p>");
-                                }
-                            }
-                            else {
-                                document.getElementById("combo").innerHTML = "Nicht mit sich selbst kombinierbar";
-                                Ovajeh.selectedItemArray.splice(0, Ovajeh.selectedItemArray.length);
-                            }
-                        }
-                        break;
-                    case `${Ovajeh.items.Scherbe.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Scherbe.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Stoff.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Stoff.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            console.log(`... with ${_event.detail}`);
-                            if (Ovajeh.selectedItemArray[0] != _event.detail) {
-                                if (Ovajeh.selectedItemArray[0] == "Stuhlbein") {
-                                    document.getElementById("Stuhlbein").remove();
-                                    document.getElementById("Stoff").remove();
-                                    document.getElementById("combo").innerHTML = "Erstellt: Fackel";
-                                    Ovajeh.ƒS.Inventory.add(Ovajeh.items.Fackel);
-                                    Ovajeh.save.protagonist.experience += 20;
-                                    checkExperience();
-                                    sfx("complete");
-                                    await Ovajeh.ƒS.Text.print("Fackel dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>20</span> XP</p>");
-                                }
-                            }
-                            else {
-                                sfx("no");
-                                document.getElementById("combo").innerHTML = "Nicht mit sich selbst kombinierbar";
-                                Ovajeh.selectedItemArray.splice(0, Ovajeh.selectedItemArray.length);
-                            }
-                        }
-                        break;
-                    case `${Ovajeh.items.Stuhlbein.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Stuhlbein.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            console.log(`... with ${_event.detail}`);
-                            if (Ovajeh.selectedItemArray[0] != _event.detail) {
-                                if (Ovajeh.selectedItemArray[0] == "Stoff") {
-                                    document.getElementById("Stuhlbein").remove();
-                                    document.getElementById("Stoff").remove();
-                                    document.getElementById("combo").innerHTML = "Erstellt: Fackel";
-                                    Ovajeh.ƒS.Inventory.add(Ovajeh.items.Fackel);
-                                    Ovajeh.save.protagonist.experience += 20;
-                                    checkExperience();
-                                    sfx("complete");
-                                    await Ovajeh.ƒS.Text.print("Fackel dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>20</span> XP</p>");
-                                }
-                            }
-                            else {
-                                sfx("no");
-                                document.getElementById("combo").innerHTML = "Nicht mit sich selbst kombinierbar";
-                                Ovajeh.selectedItemArray.splice(0, Ovajeh.selectedItemArray.length);
-                            }
-                        }
-                        break;
-                    case `${Ovajeh.items.Reißzwecke.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Reißzwecke.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Zahn.name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Zahn.text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Combat[0].name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Combat[0].text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    case `${Ovajeh.items.Combat[1].name}`:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print(Ovajeh.items.Combat[1].text);
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
-                        }
-                        break;
-                    default:
-                        if (Ovajeh.selectedItemArray.length == 0) {
-                            Ovajeh.ƒS.Text.print("Eine magische Waffe der Spiegelwelt, geschmiedet aus Sanchezium.");
-                        }
-                        else if (Ovajeh.selectedItemArray.length > 0) {
-                            sfx("no");
-                            document.getElementById("combo").innerHTML = "Nicht damit kombinierbar";
-                            Ovajeh.selectedItemArray.shift();
+                        switch (_event.detail) {
+                            case "Seite 1":
+                            case "Seite 2":
+                            case "Seite 3":
+                            case "Seite 4":
+                            case "Seite 5":
+                            case "Seite 6":
+                                sfx("complete");
+                                document.getElementById("Seite_1").remove();
+                                document.getElementById("Seite_2").remove();
+                                document.getElementById("Seite_3").remove();
+                                document.getElementById("Seite_4").remove();
+                                document.getElementById("Seite_5").remove();
+                                document.getElementById("Seite_6").remove();
+                                await Ovajeh.ƒS.Text.print(`Erstellt: ${Ovajeh.items.Code.name}<hr class="golden"></hr><br> + 20 XP`);
+                                Ovajeh.ƒS.Inventory.add(Ovajeh.items.Code);
+                                Ovajeh.save.protagonist.experience += 20;
+                                checkExperience();
+                                combine = undefined;
+                                break;
                         }
                         break;
                 }
             }
         }
-        else {
-            console.log(`using ${use}`);
-        }
     }
-    ;
     function eventHandler(_event) {
         let container = document.querySelector("#items");
         let highlightedItems = container.querySelectorAll("li");
@@ -2154,28 +2114,22 @@ var Ovajeh;
             document.removeEventListener("keydown", listen);
         }
     }
-    let use;
     async function listen(_event) {
         let nameItem = document.querySelectorAll("li > name");
         switch (_event.code) {
             case "KeyC":
-                if (Ovajeh.selectedItemArray.length == 0) {
-                    Ovajeh.selectedItemArray.push(nameItem[Ovajeh.counter].innerHTML);
-                    console.log(`combining ${Ovajeh.selectedItemArray[0]} ...`);
-                    document.getElementById("combo").innerHTML = `Kombiniere ${Ovajeh.selectedItemArray[0]} mit ...`;
+                if (combine == undefined) {
+                    if (use == undefined) {
+                        combine = nameItem[Ovajeh.counter].innerHTML;
+                        Ovajeh.ƒS.Text.print(`${combine} soll womit kombiniert werden?`);
+                    }
+                    else {
+                        use = undefined;
+                        combine = nameItem[Ovajeh.counter].innerHTML;
+                        Ovajeh.ƒS.Text.print(`${combine} soll womit kombiniert werden?`);
+                    }
                 }
-                else if (nameItem[Ovajeh.counter].innerHTML == Ovajeh.selectedItemArray[0]) {
-                    sfx("no");
-                    Ovajeh.selectedItemArray.shift();
-                    document.getElementById("combo").innerHTML = `Nicht zweimal auswählbar.`;
-                }
-                else {
-                    console.log(`combining new ...`);
-                    Ovajeh.selectedItemArray.shift();
-                    Ovajeh.selectedItemArray.push(nameItem[Ovajeh.counter].innerHTML);
-                    console.log(`combining ${Ovajeh.selectedItemArray[0]} ...`);
-                    document.getElementById("combo").innerHTML = `Kombiniere ${Ovajeh.selectedItemArray[0]} mit ...`;
-                }
+                console.log(combine);
                 break;
             case "KeyE":
                 console.log(`examining ${nameItem[Ovajeh.counter].innerHTML} ...`);
@@ -2280,122 +2234,60 @@ var Ovajeh;
                         await Ovajeh.ƒS.Text.print(`${Ovajeh.items.Combat[1].examine}`);
                         break;
                     default:
-                        await Ovajeh.ƒS.Text.print('Klick auf den Waffenslot unten links.');
+                        sfx("confirm");
+                        changeWeapon(nameItem[Ovajeh.counter].innerHTML);
+                        await Ovajeh.ƒS.Text.print(`${Ovajeh.save.protagonist.weapon.name} wurde ausgerüstet<hr class="golden"></hr>`);
                         break;
                 }
                 break;
             case "KeyU":
                 if (use == undefined) {
-                    console.log(`using ${nameItem[Ovajeh.counter].innerHTML} ...`);
-                    switch (nameItem[Ovajeh.counter].innerHTML) {
-                        case "Seite 1":
-                        case "Seite 2":
-                        case "Seite 3":
-                        case "Seite 4":
-                        case "Seite 5":
-                        case "Seite 6":
-                        case `${Ovajeh.items.Stuhlbein.name}`:
-                        case `${Ovajeh.items.Lampenteil.name}`:
-                        case `${Ovajeh.items.Kaminteil.name}`:
-                        case `${Ovajeh.items.Code.name}`:
-                        case `${Ovajeh.items.Feder.name}`:
-                        case `${Ovajeh.items.Stoff.name}`:
-                        case `${Ovajeh.items.Buch.name}`:
-                            document.getElementById("combo").innerHTML = "Kann nicht benutzt werden";
-                            sfx("no");
-                            await say("normal", "Warum und wofür sollte ich das benutzen?");
-                            break;
-                        case `${Ovajeh.items.Scherbe.name}`:
-                            document.getElementById("combo").innerHTML = "Scherbe wird benutzt...";
-                            sfx("confirm");
-                            use = "Scherbe";
-                            console.log(`${use}`);
-                            await say("smile", 'Der Schlüssel zu einer anderen Welt.');
-                            break;
-                        case `${Ovajeh.items.Fackel.name}`:
-                            document.getElementById("combo").innerHTML = "Fackel wird benutzt...";
-                            sfx("confirm");
-                            use = "Fackel";
-                            await say("normal", 'Es fehlt noch was. So wirkt sie noch nicht fertig.');
-                            break;
-                        case `${Ovajeh.items.Blutsfeder.name}`:
-                            document.getElementById("combo").innerHTML = "Blutsfeder wird benutzt...";
-                            sfx("confirm");
-                            use = "Blutsfeder";
-                            console.log(`${use}`);
-                            await say("normal", 'Was könnte ich damit unterzeichnen?');
-                            break;
-                        case `${Ovajeh.items.Asche.name}`:
-                            document.getElementById("combo").innerHTML = "Asche wird benutzt";
-                            sfx("confirm");
-                            use = "Asche";
-                            console.log(`${use}`);
-                            await say("normal", "Na, die Asche sollte ich wohl am besten nicht auf dem Boden verstreuen.");
-                            break;
-                        case `${Ovajeh.items.Schlüssel.name}`:
-                            document.getElementById("combo").innerHTML = "Schlüssel wird benutzt";
-                            sfx("confirm");
-                            use = "Schlüssel";
-                            console.log(`${use}`);
-                            await say("normal", "Jetzt muss ich nur schaffen, damit die Tür zu knacken.");
-                            break;
-                        case `${Ovajeh.items.Reißzwecke.name}`:
-                            if (checkForItems("Feder") === true) {
-                                await say("sad", 'Autsch!');
-                                document.getElementById("Reißzwecke").remove();
-                                Ovajeh.save.protagonist.experience += 10;
-                                checkExperience();
-                                sfx("complete");
-                                Ovajeh.ƒS.Inventory.add(Ovajeh.items.Blut);
-                                await Ovajeh.ƒS.Text.print("Blut dem Inventar hinzugefügt<hr class='golden'></hr> <br><p>+ <span style='color: green'>10</span> XP</p>");
-                            }
-                            else {
-                                sfx("confirm");
-                                await say("smile", 'Vielleicht muss ich später noch etwas mit Blut unterzeichnen. Man kann nie genug vorbereitet sein.');
-                            }
-                            break;
-                        case `${Ovajeh.items.Spiegelessenz.name}`:
-                            document.getElementById("combo").innerHTML = "Spiegelessenz wird benutzt";
-                            sfx("confirm");
-                            use = "Spiegelessenz";
-                            console.log(`${use}`);
-                            await say("smile", "Es ist Zeit das Portal zu öffnen!");
-                            break;
-                        case `${Ovajeh.items.Opferfackel.name}`:
-                            document.getElementById("combo").innerHTML = "Opferungsfackel wird benutzt";
-                            sfx("confirm");
-                            use = "Opferungsfackel";
-                            console.log(`${use}`);
-                            await say("angry", "Ich sollte mich bereit auf einen Kampf mit dem Bösen machen!");
-                            break;
-                        case `${Ovajeh.items.Zahn.name}`:
-                            if (Ovajeh.currentScene === "combat") {
-                                if (Ovajeh.enemy.health <= 50) {
-                                    document.getElementById("Zahn").remove();
-                                    Ovajeh.ƒS.Inventory.close();
-                                    await Ovajeh.ƒS.Speech.tell(`<span style="color: darkgreen">${Ovajeh.save.protagonist.name}</span>`, 'Ich bin gespannt, was die böse Fee davon hält.');
-                                    {
-                                        await Ovajeh.ƒS.Speech.tell('<span style="color: darkred">Zahnfee</span>', 'Du hast ein wertvollen Tribut dabei! Ich nehme ihn an, im Tausch gegen die Essenz.');
-                                        await Ovajeh.enemy.die();
-                                    }
-                                }
-                                else {
-                                    await Ovajeh.ƒS.Speech.tell(`<span style="color: darkgreen">${Ovajeh.save.protagonist.name}</span>`, 'Jetzt noch nicht! Sie muss schwächer werden.');
-                                }
-                            }
-                            else {
-                                await say("smile", "Vielleicht später!");
-                            }
-                            break;
-                        default:
-                            sfx("confirm");
-                            changeWeapon(nameItem[Ovajeh.counter].innerHTML);
-                            await Ovajeh.ƒS.Text.print(`${Ovajeh.save.protagonist.weapon.name} wurde ausgerüstet<hr class="golden"></hr>`);
-                            break;
+                    if (combine == undefined) {
+                        use = nameItem[Ovajeh.counter].innerHTML;
+                        await Ovajeh.ƒS.Text.print(`${use} soll womit benutzt werden?<br>Evt. musst du aus dem Inventar gehen (I)`);
+                    }
+                    else {
+                        combine = undefined;
+                        use = nameItem[Ovajeh.counter].innerHTML;
+                        await Ovajeh.ƒS.Text.print(`${use} soll womit benutzt werden?<br>Evt. musst du aus dem Inventar gehen (I)`);
                     }
                 }
-                else {
-                    console.log(`still using ${use}`);
+                console.log(use);
+                switch (nameItem[Ovajeh.counter].innerHTML) {
+                    case `${Ovajeh.items.Reißzwecke.name}`:
+                        if (checkForItems("Feder") === true) {
+                            sfx("complete");
+                            document.getElementById("Reißzwecke").remove();
+                            await say("sad", 'Autsch!');
+                            await Ovajeh.ƒS.Text.print(`Erstellt: ${Ovajeh.items.Blut.name}<hr class="golden"></hr><br> + 10 XP`);
+                            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Blut);
+                            Ovajeh.save.protagonist.experience += 10;
+                            checkExperience();
+                        }
+                        else {
+                            sfx("confirm");
+                            await say("smile", 'Vielleicht muss ich später noch etwas mit Blut unterzeichnen. Man kann nie genug vorbereitet sein.');
+                        }
+                        break;
+                    case `${Ovajeh.items.Zahn.name}`:
+                        if (Ovajeh.currentScene === "combat") {
+                            if (Ovajeh.enemy.health <= 50) {
+                                document.getElementById("Zahn").remove();
+                                Ovajeh.ƒS.Inventory.close();
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkgreen">${Ovajeh.save.protagonist.name}</span>`, 'Ich bin gespannt, was die böse Fee davon hält.');
+                                {
+                                    await Ovajeh.ƒS.Speech.tell('<span style="color: darkred">Zahnfee</span>', 'Du hast ein wertvollen Tribut dabei! Ich nehme ihn an, im Tausch gegen die Essenz.');
+                                    await Ovajeh.enemy.die();
+                                }
+                            }
+                            else {
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkgreen">${Ovajeh.save.protagonist.name}</span>`, 'Jetzt noch nicht! Sie muss schwächer werden.');
+                            }
+                        }
+                        else {
+                            await say("smile", "Vielleicht später!");
+                        }
+                        break;
                 }
         }
     }
@@ -2547,104 +2439,6 @@ var Ovajeh;
                     break;
             }
         }
-        else {
-            let str = _event.target.id;
-            switch (use) {
-                // ITEMS TO USE WHILE IN INVENTORY
-                // Asche
-                case `${Ovajeh.items.Asche.name}`:
-                    // console.log(_event.target)
-                    if (str == "Asche") {
-                        document.getElementById("combo").innerHTML = "Nicht mit sich selbst benutzbar";
-                        console.log("same item");
-                        use = undefined;
-                        sfx("no");
-                    }
-                    break;
-                // Scherbe
-                case `${Ovajeh.items.Scherbe.name}`:
-                    // console.log(_event.target)
-                    if (str == "Scherbe") {
-                        document.getElementById("combo").innerHTML = "Nicht mit sich selbst benutzbar";
-                        console.log("same item");
-                        use = undefined;
-                        sfx("no");
-                    }
-                    break;
-                // Spiegelessenz
-                case `${Ovajeh.items.Spiegelessenz.name}`:
-                    // console.log(_event.target)
-                    if (str == "Spiegelessenz") {
-                        document.getElementById("combo").innerHTML = "Nicht mit sich selbst benutzbar";
-                        console.log("same item");
-                        use = undefined;
-                        sfx("no");
-                    }
-                    break;
-                // Schlüssel
-                case `${Ovajeh.items.Schlüssel.name}`:
-                    // console.log(_event.target)
-                    if (str == "Schlüssel") {
-                        document.getElementById("combo").innerHTML = "Nicht mit sich selbst benutzbar";
-                        console.log("same item");
-                        use = undefined;
-                        sfx("no");
-                    }
-                    break;
-                // Opferungsfackel
-                case `${Ovajeh.items.Opferfackel.name}`:
-                    // console.log(_event.target)
-                    if (str == "Opferungsfackel") {
-                        document.getElementById("combo").innerHTML = "Nicht mit sich selbst benutzbar";
-                        console.log("same item");
-                        use = undefined;
-                        sfx("no");
-                    }
-                    break;
-                // Blutsfeder
-                case `${Ovajeh.items.Blutsfeder.name}`:
-                    if (str == "Fackel") {
-                        console.log("use works");
-                        sfx("complete");
-                        document.getElementById("Fackel").remove();
-                        document.getElementById("Blutsfeder").remove();
-                        document.getElementById("combo").innerHTML = "Opferungsfackel erstellt";
-                        Ovajeh.ƒS.Inventory.add(Ovajeh.items.Opferfackel);
-                        Ovajeh.save.protagonist.experience += 30;
-                        checkExperience();
-                        await Ovajeh.ƒS.Text.print("Opferungsfackel dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>30</span> XP</p>");
-                        use = undefined;
-                    }
-                    if (str == "Blutsfeder") {
-                        document.getElementById("combo").innerHTML = "Nicht mit sich selbst benutzbar";
-                        console.log("same item");
-                        use = undefined;
-                        sfx("no");
-                    }
-                    break;
-                // Fackel
-                case `${Ovajeh.items.Fackel.name}`:
-                    if (str == "Blutsfeder") {
-                        console.log("use works");
-                        sfx("complete");
-                        document.getElementById("Fackel").remove();
-                        document.getElementById("Blutsfeder").remove();
-                        document.getElementById("combo").innerHTML = "Opferungsfackel erstellt";
-                        Ovajeh.ƒS.Inventory.add(Ovajeh.items.Opferfackel);
-                        Ovajeh.save.protagonist.experience += 30;
-                        checkExperience();
-                        await Ovajeh.ƒS.Text.print("Opferungsfackel dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>30</span> XP</p>");
-                        use = undefined;
-                    }
-                    if (str == "Fackel") {
-                        document.getElementById("combo").innerHTML = "Nicht mit sich selbst benutzbar";
-                        console.log("same item");
-                        use = undefined;
-                        sfx("no");
-                    }
-                    break;
-            }
-        }
     }
     Ovajeh.using = using;
     document.addEventListener("keydown", hndKeypressForInventory);
@@ -2672,12 +2466,11 @@ var Ovajeh;
                     Ovajeh.ƒS.Text.close();
                     Ovajeh.ƒS.Inventory.close();
                     Ovajeh.statusInventory = false;
-                    document.getElementById("combo").innerHTML = "";
                     console.log(Ovajeh.statusInventory);
                     if (Ovajeh.currentScene == "combat") {
                         combat();
                     }
-                    Ovajeh.selectedItemArray.shift();
+                    combine = undefined;
                 }
                 break;
             case Ovajeh.ƒ.KEYBOARD_CODE.ESC:
@@ -2686,11 +2479,10 @@ var Ovajeh;
                 Ovajeh.ƒS.Text.close();
                 Ovajeh.ƒS.Inventory.close();
                 Ovajeh.statusInventory = false;
-                document.getElementById("combo").innerHTML = "";
                 if (Ovajeh.currentScene == "combat") {
                     combat();
                 }
-                Ovajeh.selectedItemArray.shift();
+                combine = undefined;
                 break;
         }
     }
@@ -4165,15 +3957,38 @@ var Ovajeh;
         await Ovajeh.ƒS.Location.show(Ovajeh.location.intro.mansion);
         await Ovajeh.ƒS.update(0);
         if (Ovajeh.visitScene() === false) {
-            await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.happy, Ovajeh.ƒS.positionPercent(20, 100));
-            await Ovajeh.ƒS.update(1);
-            Ovajeh.showUI();
-            let hero_randomGreeting = Math.floor(Math.random() * Ovajeh.sound.protagonist.greeting.length);
-            Ovajeh.ƒS.Sound.play(Ovajeh.sound.protagonist.greeting[hero_randomGreeting], 1, false);
-            await Ovajeh.protagonistCycle();
-            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.protagonist);
-            await Ovajeh.ƒS.update(1);
-            Ovajeh.closeUI();
+            /* await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.happy, ƒS.positionPercent(20, 100));
+             await ƒS.update(1);
+             showUI();
+             let hero_randomGreeting = Math.floor(Math.random() * sound.protagonist.greeting.length);
+             ƒS.Sound.play(sound.protagonist.greeting[hero_randomGreeting], 1, false);
+             await protagonistCycle();
+             await ƒS.Character.hide(characters.protagonist);
+             await ƒS.update(1);
+             closeUI();*/
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Asche);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Blut);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Blutsfeder);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buch);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Code);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Fackel);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Feder);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Kaminteil);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Lampenteil);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Notiz);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Opferfackel);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Reißzwecke);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Schlüssel);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Spiegelessenz);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Stoff);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Taschenuhr);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Zahn);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buchseiten[0]);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buchseiten[1]);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buchseiten[2]);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buchseiten[3]);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buchseiten[4]);
+            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buchseiten[5]);
         }
         else if (Ovajeh.won === false) {
             await Ovajeh.say("normal", 'Irgendwas Neues?');

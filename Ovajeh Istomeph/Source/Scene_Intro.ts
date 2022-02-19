@@ -519,7 +519,7 @@ namespace Ovajeh {
         await ƒS.Location.show(location.intro.mansion);
         await ƒS.update(0);
         if (visitScene() === false) {
-            await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.happy, ƒS.positionPercent(20, 100));
+           /* await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.happy, ƒS.positionPercent(20, 100));
             await ƒS.update(1);
             showUI();
             let hero_randomGreeting = Math.floor(Math.random() * sound.protagonist.greeting.length);
@@ -527,7 +527,30 @@ namespace Ovajeh {
             await protagonistCycle();
             await ƒS.Character.hide(characters.protagonist);
             await ƒS.update(1);
-            closeUI();
+            closeUI();*/
+            ƒS.Inventory.add(items.Asche)
+            ƒS.Inventory.add(items.Blut)
+            ƒS.Inventory.add(items.Blutsfeder)
+            ƒS.Inventory.add(items.Buch)
+            ƒS.Inventory.add(items.Code)
+            ƒS.Inventory.add(items.Fackel)
+            ƒS.Inventory.add(items.Feder)
+            ƒS.Inventory.add(items.Kaminteil)
+            ƒS.Inventory.add(items.Lampenteil)
+            ƒS.Inventory.add(items.Notiz)
+            ƒS.Inventory.add(items.Opferfackel)
+            ƒS.Inventory.add(items.Reißzwecke)
+            ƒS.Inventory.add(items.Schlüssel)
+            ƒS.Inventory.add(items.Spiegelessenz)
+            ƒS.Inventory.add(items.Stoff)
+            ƒS.Inventory.add(items.Taschenuhr)
+            ƒS.Inventory.add(items.Zahn)
+            ƒS.Inventory.add(items.Buchseiten[0])
+            ƒS.Inventory.add(items.Buchseiten[1])
+            ƒS.Inventory.add(items.Buchseiten[2])
+            ƒS.Inventory.add(items.Buchseiten[3])
+            ƒS.Inventory.add(items.Buchseiten[4])
+            ƒS.Inventory.add(items.Buchseiten[5])
         } else if (won === false) {
             await say("normal", 'Irgendwas Neues?');
         } else {

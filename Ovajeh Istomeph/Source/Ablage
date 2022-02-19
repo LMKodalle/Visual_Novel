@@ -1,0 +1,58 @@
+/*
+            case `${items.Asche.name}`:
+              break;
+            case `${items.Blut.name}`:
+              break;
+            case `${items.Blutsfeder.name}`:
+              break;
+            case `${items.Buch.name}`:
+              break;
+            case `${items.Code.name}`:
+              break;
+            case `${items.Fackel.name}`:
+              break;
+            case `${items.Feder.name}`:
+              break;
+            case `${items.Kaminteil.name}`:
+              break;
+            case `${items.Lampenteil.name}`:
+              break;
+            case `${items.Notiz.name}`:
+              break;
+            case `${items.Opferfackel.name}`:
+              break;
+            case `${items.Reißzwecke.name}`:
+              break;
+            case `${items.Scherbe.name}`:
+              break;
+            case `${items.Schlüssel.name}`:
+              break;
+            case `${items.Spiegelessenz.name}`:
+              break;
+            case `${items.Stuhlbein.name}`:
+              break;
+            case `${items.Stoff.name}`:
+              break;
+            case `${items.Taschenuhr.name}`:
+              break;
+            case `${items.Zahn.name}`:
+              break;
+
+            ƒS.Inventory.add(items.Asche)
+            ƒS.Inventory.add(items.Blut)
+            ƒS.Inventory.add(items.Blutsfeder)
+            ƒS.Inventory.add(items.Buch)
+            ƒS.Inventory.add(items.Code)
+            ƒS.Inventory.add(items.Fackel)
+            ƒS.Inventory.add(items.Feder)
+            ƒS.Inventory.add(items.Kaminteil)
+            ƒS.Inventory.add(items.Lampenteil)
+            ƒS.Inventory.add(items.Notiz)
+            ƒS.Inventory.add(items.Opferfackel)
+            ƒS.Inventory.add(items.Reißzwecke)
+            ƒS.Inventory.add(items.Schlüssel)
+            ƒS.Inventory.add(items.Spiegelessenz)
+            ƒS.Inventory.add(items.Stoff)
+            ƒS.Inventory.add(items.Taschenuhr)
+            ƒS.Inventory.add(items.Zahn)
+*/
