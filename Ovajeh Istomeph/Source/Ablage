@@ -55,4 +55,10 @@
             ƒS.Inventory.add(items.Stoff)
             ƒS.Inventory.add(items.Taschenuhr)
             ƒS.Inventory.add(items.Zahn)
+
+          default:
+          sfx("confirm");
+          changeWeapon(nameItem[counter].innerHTML)
+          await ƒS.Text.print(`${save.protagonist.weapon.name} wurde ausgerüstet<hr class="golden"></hr>`)
+          break; 
 */

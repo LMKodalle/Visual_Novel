@@ -293,12 +293,12 @@ namespace Ovajeh {
                     if (door.visited == false) {
                         console.log("door a");
                         door.visited = true;
-                        if (await options("Zurück", "Hier bleiben") === true) {
+                        if (await options("Treppenhaus", "Hier bleiben") === true) {
                             ƒS.insert(Scene_Intro);
                         }
                     } else {
                         console.log("door b");
-                        if (await options("Zurück", "Hier bleiben") === true) {
+                        if (await options("Treppenhaus", "Hier bleiben") === true) {
                             ƒS.insert(Scene_Intro);
                         }
                     }

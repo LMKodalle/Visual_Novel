@@ -3235,13 +3235,13 @@ var Ovajeh;
                     if (Ovajeh.door.visited == false) {
                         console.log("door a");
                         Ovajeh.door.visited = true;
-                        if (await Ovajeh.options("Zurück", "Hier bleiben") === true) {
+                        if (await Ovajeh.options("Treppenhaus", "Hier bleiben") === true) {
                             Ovajeh.ƒS.insert(Ovajeh.Scene_Intro);
                         }
                     }
                     else {
                         console.log("door b");
-                        if (await Ovajeh.options("Zurück", "Hier bleiben") === true) {
+                        if (await Ovajeh.options("Treppenhaus", "Hier bleiben") === true) {
                             Ovajeh.ƒS.insert(Ovajeh.Scene_Intro);
                         }
                     }
@@ -3957,38 +3957,15 @@ var Ovajeh;
         await Ovajeh.ƒS.Location.show(Ovajeh.location.intro.mansion);
         await Ovajeh.ƒS.update(0);
         if (Ovajeh.visitScene() === false) {
-            /* await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.happy, ƒS.positionPercent(20, 100));
-             await ƒS.update(1);
-             showUI();
-             let hero_randomGreeting = Math.floor(Math.random() * sound.protagonist.greeting.length);
-             ƒS.Sound.play(sound.protagonist.greeting[hero_randomGreeting], 1, false);
-             await protagonistCycle();
-             await ƒS.Character.hide(characters.protagonist);
-             await ƒS.update(1);
-             closeUI();*/
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Asche);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Blut);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Blutsfeder);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buch);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Code);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Fackel);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Feder);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Kaminteil);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Lampenteil);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Notiz);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Opferfackel);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Reißzwecke);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Schlüssel);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Spiegelessenz);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Stoff);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Taschenuhr);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Zahn);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buchseiten[0]);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buchseiten[1]);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buchseiten[2]);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buchseiten[3]);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buchseiten[4]);
-            Ovajeh.ƒS.Inventory.add(Ovajeh.items.Buchseiten[5]);
+            await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.happy, Ovajeh.ƒS.positionPercent(20, 100));
+            await Ovajeh.ƒS.update(1);
+            Ovajeh.showUI();
+            let hero_randomGreeting = Math.floor(Math.random() * Ovajeh.sound.protagonist.greeting.length);
+            Ovajeh.ƒS.Sound.play(Ovajeh.sound.protagonist.greeting[hero_randomGreeting], 1, false);
+            await Ovajeh.protagonistCycle();
+            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.protagonist);
+            await Ovajeh.ƒS.update(1);
+            Ovajeh.closeUI();
         }
         else if (Ovajeh.won === false) {
             await Ovajeh.say("normal", 'Irgendwas Neues?');
