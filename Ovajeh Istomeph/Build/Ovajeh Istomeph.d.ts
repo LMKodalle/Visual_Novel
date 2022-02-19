@@ -591,6 +591,7 @@ declare namespace Ovajeh {
     let doorOpen: boolean;
     let windowNotice: boolean;
     let gotKey: boolean;
+    let knowWindow: boolean;
     function positions_intro(_event: MouseEvent): Promise<void>;
     function Scene_Intro(): ƒS.SceneReturn;
 }
@@ -653,6 +654,7 @@ declare namespace Ovajeh {
     };
     let mirrorRepaired: boolean;
     let mirrorOpened: boolean;
+    let michelaVisited: boolean;
     function positions_mirror_room(_event: MouseEvent): Promise<void>;
     function Scene_Mirror_Room(): ƒS.SceneReturn;
 }

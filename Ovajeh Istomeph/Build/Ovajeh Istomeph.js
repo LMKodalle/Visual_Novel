@@ -1283,6 +1283,7 @@ var Ovajeh;
             if (Ovajeh.currentScene == "combat") {
                 combat();
             }
+            Ovajeh.selectedItemArray.shift();
         }
     }
     Ovajeh.clickInventory = clickInventory;
@@ -1733,6 +1734,7 @@ var Ovajeh;
             await say("smile", 'Die fehlende Spiegelscherbe. Hab ich mir doch fast gedacht!');
             await say("happy", 'Endlich halte ich den Schlüssel zu einer anderen Welt in meinen Händen! Jetzt brauche ich Antworten... Viele!');
             Ovajeh.ƒS.Inventory.add(Ovajeh.items.Scherbe);
+            document.getElementById("Code").remove();
             Ovajeh.save.protagonist.experience += 30;
             checkExperience();
             sfx("complete");
@@ -1763,6 +1765,8 @@ var Ovajeh;
             await say("angry", 'Die Waffe wird dort wahrscheinlich sehr wertvoll sein. Wer weiß schon welche unheimlichen Dinge dort passieren könnten?');
             await say("normal", 'Ich nehme sie erstmal mit. So oder so werde ich Adam deshalb zur Rede stellen.');
             sfx("complete");
+            document.getElementById("Taschenuhr").remove();
+            document.getElementById("Notiz").remove();
             craftWeaponHero();
             Ovajeh.save.protagonist.experience += 50;
             await Ovajeh.ƒS.Text.print("Waffe dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>50</span> XP</p>");
@@ -2233,6 +2237,9 @@ var Ovajeh;
                     case `${Ovajeh.items.Opferfackel.name}`:
                         await Ovajeh.ƒS.Text.print(`${Ovajeh.items.Opferfackel.examine}`);
                         break;
+                    case `${Ovajeh.items.Schlüssel.name}`:
+                        await Ovajeh.ƒS.Text.print(`${Ovajeh.items.Schlüssel.examine}`);
+                        break;
                     case `${Ovajeh.items.Reißzwecke.name}`:
                         await Ovajeh.ƒS.Text.print(`${Ovajeh.items.Reißzwecke.examine}`);
                         break;
@@ -2248,12 +2255,12 @@ var Ovajeh;
                         Ovajeh.save.protagonist.experience += 20;
                         await Ovajeh.ƒS.Text.print("Taschenuhr dem Inventar hinzugefügt<hr class='golden'></hr><br><p>+ <span style='color: green'>20</span> XP</p>");
                         checkExperience();
+                        document.getElementById("Buch").remove();
+                        await Ovajeh.ƒS.Text.print("Buch aus dem Inventar gelöscht<hr class='golden'></hr>");
                         break;
                     case `${Ovajeh.items.Taschenuhr.name}`:
                         if (Ovajeh.watchCheckable === false) {
                             await Ovajeh.ƒS.Text.print(`${Ovajeh.items.Taschenuhr.examine}`);
-                            document.getElementById("Buch").remove();
-                            await Ovajeh.ƒS.Text.print("Buch aus dem Inventar gelöscht<hr class='golden'></hr>");
                         }
                         else {
                             await Ovajeh.ƒS.Text.print(`${Ovajeh.items.Taschenuhr.examine2}`);
@@ -2339,7 +2346,8 @@ var Ovajeh;
                                 Ovajeh.save.protagonist.experience += 10;
                                 checkExperience();
                                 sfx("complete");
-                                await Ovajeh.ƒS.Text.print("Blut aus dem Inventar gelöscht<hr class='golden'></hr> <br><p>+ <span style='color: green'>10</span> XP</p>");
+                                Ovajeh.ƒS.Inventory.add(Ovajeh.items.Blut);
+                                await Ovajeh.ƒS.Text.print("Blut dem Inventar hinzugefügt<hr class='golden'></hr> <br><p>+ <span style='color: green'>10</span> XP</p>");
                             }
                             else {
                                 sfx("confirm");
@@ -2412,6 +2420,7 @@ var Ovajeh;
                             await say("normal", 'Ich muss unbedingt mehr über diese "Fackel" herausfinden.');
                             await say("normal", "Wenn ich einfach weiter diesen Botschaften folge, dann erschließt sich mir das Ganze bestimmt.");
                             document.getElementById("Asche").remove();
+                            Ovajeh.knowWindow = true;
                             Ovajeh.save.protagonist.experience += 10;
                             checkExperience();
                             sfx("complete");
@@ -2668,6 +2677,7 @@ var Ovajeh;
                     if (Ovajeh.currentScene == "combat") {
                         combat();
                     }
+                    Ovajeh.selectedItemArray.shift();
                 }
                 break;
             case Ovajeh.ƒ.KEYBOARD_CODE.ESC:
@@ -2680,6 +2690,7 @@ var Ovajeh;
                 if (Ovajeh.currentScene == "combat") {
                     combat();
                 }
+                Ovajeh.selectedItemArray.shift();
                 break;
         }
     }
@@ -3368,10 +3379,14 @@ var Ovajeh;
                         }
                     }
                     else {
-                        console.log("secret b");
-                        await Ovajeh.say("normal", 'Ich probiere mal...');
-                        Ovajeh.showUI();
-                        Ovajeh.numberCodeCheck();
+                        if (Ovajeh.gotWeapon === false) {
+                            console.log("secret b");
+                            await Ovajeh.say("normal", 'Ich probiere mal...');
+                            Ovajeh.showUI();
+                            Ovajeh.numberCodeCheck();
+                        }
+                        else
+                            await Ovajeh.say("normal", 'Los ich muss weiter! Da ist nichts mehr drin.');
                     }
                 } // if y
             } // if x
@@ -3672,6 +3687,7 @@ var Ovajeh;
     Ovajeh.doorOpen = false;
     Ovajeh.windowNotice = false;
     Ovajeh.gotKey = false;
+    Ovajeh.knowWindow = false;
     // CLICKABLE POSITIONS
     async function positions_intro(_event) {
         // console.log(_event.x, _event.y)
@@ -3999,31 +4015,35 @@ var Ovajeh;
                     else {
                         console.log("window b");
                         Ovajeh.sfx("confirm");
-                        if (Ovajeh.checkForItems("Asche") === false) {
-                            await Ovajeh.say("normal", "Nebel überall. Ich glaube der geht so schnell nicht wieder weg.");
-                            Ovajeh.ƒS.Sound.play(Ovajeh.sound.protagonist.misc[2], 0.5);
-                            await Ovajeh.say("shocked", 'Igitt! Da ist ja ziemlich viel Dreck an der rechten unteren Ecke');
-                            if (await Ovajeh.options("Genauer anschauen", "Igitt") === true) {
-                                await Ovajeh.say("shocked", "Interessant! Vielleicht halluziniere ich gerade, aber der Dreck scheint eine perfekte Form zu bilden.");
-                                await Ovajeh.say("normal", 'Könnte ein Buchstabe sein, oder eine Zahl...');
-                                Ovajeh.windowNotice = true;
-                                if (Ovajeh.chair.visited === true) {
-                                    await Ovajeh.say("smile", 'Also den Umständen entsprechend ist dies nicht gerade uninteressant.');
-                                    await Ovajeh.say("normal", "Wie beim Stuhlbein könnte hier die Liebe zum Detail genau richtig sein.");
-                                    await Ovajeh.say("smile", 'Ich will damit nicht sagen, dass ich die Fensterscheibe mit Dreck einschmieren sollte...');
-                                    await Ovajeh.say("happy", 'Aber vielleicht sollte ich es machen und schauen ob dann mehr zu erkennen ist.');
+                        if (Ovajeh.knowWindow === false) {
+                            if (Ovajeh.checkForItems("Asche") === false) {
+                                Ovajeh.ƒS.Sound.play(Ovajeh.sound.protagonist.misc[2], 0.5);
+                                await Ovajeh.say("shocked", 'Igitt! Da ist ja ziemlich viel Dreck an der rechten unteren Ecke');
+                                if (await Ovajeh.options("Genauer anschauen", "Igitt") === true) {
+                                    await Ovajeh.say("shocked", "Interessant! Vielleicht halluziniere ich gerade, aber der Dreck scheint eine perfekte Form zu bilden.");
+                                    await Ovajeh.say("normal", 'Könnte ein Buchstabe sein, oder eine Zahl...');
+                                    Ovajeh.windowNotice = true;
+                                    if (Ovajeh.chair.visited === true) {
+                                        await Ovajeh.say("smile", 'Also den Umständen entsprechend ist dies nicht gerade uninteressant.');
+                                        await Ovajeh.say("normal", "Wie beim Stuhlbein könnte hier die Liebe zum Detail genau richtig sein.");
+                                        await Ovajeh.say("smile", 'Ich will damit nicht sagen, dass ich die Fensterscheibe mit Dreck einschmieren sollte...');
+                                        await Ovajeh.say("happy", 'Aber vielleicht sollte ich es machen und schauen ob dann mehr zu erkennen ist.');
+                                    }
+                                    else {
+                                        await Ovajeh.say("normal", 'Naja, vielleicht nicht genau das, wonach ich suche. Ich behalte es mal im Hinterkopf');
+                                    }
                                 }
                                 else {
-                                    await Ovajeh.say("normal", 'Naja, vielleicht nicht genau das, wonach ich suche. Ich behalte es mal im Hinterkopf');
+                                    await Ovajeh.say("angry", 'Was mache ich hier auch und schaue mir den Dreck an den Fensterscheiben an.');
+                                    await Ovajeh.say('normal', 'Ich wünschte, dass ich aus Dreck Gold machen könnte, also im Symbolischen Sinne.');
                                 }
                             }
                             else {
-                                await Ovajeh.say("angry", 'Was mache ich hier auch und schaue mir den Dreck an den Fensterscheiben an.');
-                                await Ovajeh.say('normal', 'Ich wünschte, dass ich aus Dreck Gold machen könnte, also im Symbolischen Sinne.');
+                                await Ovajeh.say('smile', 'Jetzt könnte ich endlich die Botschaft entziffern. Worauf warte ich noch?');
                             }
                         }
                         else {
-                            await Ovajeh.say('smile', 'Jetzt könnte ich endlich die Botschaft entziffern. Worauf warte ich noch?');
+                            await Ovajeh.say("normal", "Nebel überall. Ich glaube der geht so schnell nicht wieder weg. Genauso wie der Dreck, igitt.");
                         }
                     }
                 }
@@ -4225,6 +4245,7 @@ var Ovajeh;
     };
     Ovajeh.mirrorRepaired = false;
     Ovajeh.mirrorOpened = false;
+    Ovajeh.michelaVisited = false;
     // CLICKABLE POSITIONS
     async function positions_mirror_room(_event) {
         //console.log(_event.x, _event.y)
@@ -4366,117 +4387,122 @@ var Ovajeh;
                             await Ovajeh.say("shocked", 'Eine dunkle Gestalt! Oh nein, hier stimmt was ganz und gar nicht!');
                         }
                         else if (Ovajeh.mirrorOpened === false) {
-                            await Ovajeh.say("normal", "... Hmmm ...");
-                            Ovajeh.ƒS.Sound.play(Ovajeh.sound.protagonist.misc[2], 0.5);
-                            await Ovajeh.say("shocked", "!!!!!!!!");
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.shocked, Ovajeh.ƒS.positionPercent(20, 100));
-                            await Ovajeh.ƒS.update(0);
-                            Ovajeh.showUI();
-                            await Ovajeh.ƒS.Character.animate(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.smile, Ovajeh.canvasBottomEntry());
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, `Hallo ${Ovajeh.save.protagonist.name}! Du hast bestimmt viele Fragen.`);
-                            Ovajeh.showUI();
-                            await Ovajeh.say("happy", 'Michela! Ich bin so verdammt froh dich zu sehen! Und wie ich Fragen habe! Du und Adam haben ganz schön was zu erzählen.');
-                            Ovajeh.showUI();
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.happy, Ovajeh.ƒS.positionPercent(20, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.happy, Ovajeh.ƒS.positionPercent(80, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Ich freue mich auch sehr dich zu sehen! Das bedeutet, dass du meinen Hinweisen richtig gefolgt bist.");
-                            Ovajeh.showUI();
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.sad, Ovajeh.ƒS.positionPercent(80, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Am liebsten würde ich dir alles erzählen, aber die Zeit drängt und ich bin in großer Gefahr!");
-                            await Ovajeh.say("shocked", 'Oh mein Gott! Geht es dir gut!? Was ist mit Adam? Wie kann ich zu euch gelangen, um euch zu retten?');
-                            Ovajeh.showUI();
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.shocked, Ovajeh.ƒS.positionPercent(20, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.angry, Ovajeh.ƒS.positionPercent(80, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Adam... Er ist der Grund, weshalb ich hier gefangen bin! Ich konnte es auch nicht fassen, aber du musst mir jetzt genau zuhören!");
-                            await Ovajeh.say("sad", 'Adam hat dich entführt!? Ich hatte schon so eine Vermutung, aber konnte es mir nicht zusammenreimen.');
-                            Ovajeh.showUI();
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.sad, Ovajeh.ƒS.positionPercent(20, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.sad, Ovajeh.ƒS.positionPercent(80, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Er ist in Wirklichkeit nicht die Person, die er all die Jahre vorgab zu sein.");
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.shocked, Ovajeh.ƒS.positionPercent(80, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Ich erkläre dir alles wenn du hier drüben bist, jetzt musst du so schnell wie möglich das Portal öffnen bevor es zu spät ist!");
-                            await Ovajeh.say("shocked", 'Zu spät? Was meinst du damit?! Werden wir dann nicht beide gefangen sein?');
-                            Ovajeh.showUI();
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.shocked, Ovajeh.ƒS.positionPercent(20, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.angry, Ovajeh.ƒS.positionPercent(80, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Es ist Adam! Sobald er herausfindet, dass ich dir im Geheimen Botschaften übermittelt habe...");
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.shocked, Ovajeh.ƒS.positionPercent(80, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Dann wird er alles in Gang setzen, um jede Verbindung zu dieser Welt zu schließen!");
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Damit wir beide eine Chance haben, musst du unbedingt seine Waffe mitnehmen! Du hast sie doch hoffentlich gefunden?");
-                            if (Ovajeh.gotWeapon === true) {
-                                await Ovajeh.say("sad", 'Eine Chance? Du machst mir extrem viel Angst gerade! Aber ja, ich habe die Waffe gefunden. Was hat das zu bedeuten?');
+                            if (Ovajeh.michelaVisited === false) {
+                                await Ovajeh.say("normal", "... Hmmm ...");
+                                Ovajeh.ƒS.Sound.play(Ovajeh.sound.protagonist.misc[2], 0.5);
+                                await Ovajeh.say("shocked", "!!!!!!!!");
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.shocked, Ovajeh.ƒS.positionPercent(20, 100));
+                                await Ovajeh.ƒS.update(0);
+                                Ovajeh.showUI();
+                                await Ovajeh.ƒS.Character.animate(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.smile, Ovajeh.canvasBottomEntry());
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, `Hallo ${Ovajeh.save.protagonist.name}! Du hast bestimmt viele Fragen.`);
+                                Ovajeh.showUI();
+                                await Ovajeh.say("happy", 'Michela! Ich bin so verdammt froh dich zu sehen! Und wie ich Fragen habe! Du und Adam haben ganz schön was zu erzählen.');
+                                Ovajeh.showUI();
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.happy, Ovajeh.ƒS.positionPercent(20, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.happy, Ovajeh.ƒS.positionPercent(80, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Ich freue mich auch sehr dich zu sehen! Das bedeutet, dass du meinen Hinweisen richtig gefolgt bist.");
+                                Ovajeh.showUI();
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.sad, Ovajeh.ƒS.positionPercent(80, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Am liebsten würde ich dir alles erzählen, aber die Zeit drängt und ich bin in großer Gefahr!");
+                                await Ovajeh.say("shocked", 'Oh mein Gott! Geht es dir gut!? Was ist mit Adam? Wie kann ich zu euch gelangen, um euch zu retten?');
+                                Ovajeh.showUI();
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.shocked, Ovajeh.ƒS.positionPercent(20, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.angry, Ovajeh.ƒS.positionPercent(80, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Adam... Er ist der Grund, weshalb ich hier gefangen bin! Ich konnte es auch nicht fassen, aber du musst mir jetzt genau zuhören!");
+                                await Ovajeh.say("sad", 'Adam hat dich entführt!? Ich hatte schon so eine Vermutung, aber konnte es mir nicht zusammenreimen.');
                                 Ovajeh.showUI();
                                 await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.sad, Ovajeh.ƒS.positionPercent(20, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.sad, Ovajeh.ƒS.positionPercent(80, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Er ist in Wirklichkeit nicht die Person, die er all die Jahre vorgab zu sein.");
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.shocked, Ovajeh.ƒS.positionPercent(80, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Ich erkläre dir alles wenn du hier drüben bist, jetzt musst du so schnell wie möglich das Portal öffnen bevor es zu spät ist!");
+                                await Ovajeh.say("shocked", 'Zu spät? Was meinst du damit?! Werden wir dann nicht beide gefangen sein?');
+                                Ovajeh.showUI();
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.shocked, Ovajeh.ƒS.positionPercent(20, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.angry, Ovajeh.ƒS.positionPercent(80, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Es ist Adam! Sobald er herausfindet, dass ich dir im Geheimen Botschaften übermittelt habe...");
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.shocked, Ovajeh.ƒS.positionPercent(80, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Dann wird er alles in Gang setzen, um jede Verbindung zu dieser Welt zu schließen!");
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Damit wir beide eine Chance haben, musst du unbedingt seine Waffe mitnehmen! Du hast sie doch hoffentlich gefunden?");
+                                if (Ovajeh.gotWeapon === true) {
+                                    await Ovajeh.say("sad", 'Eine Chance? Du machst mir extrem viel Angst gerade! Aber ja, ich habe die Waffe gefunden. Was hat das zu bedeuten?');
+                                    Ovajeh.showUI();
+                                    await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.sad, Ovajeh.ƒS.positionPercent(20, 100));
+                                    await Ovajeh.ƒS.update(0);
+                                }
+                                else {
+                                    await Ovajeh.say("sad", 'Waffe? Davon höre ich zum ersten Mal! Ich werde sie noch finden, versprochen! Aber lediglich eine Chance? Oh je...');
+                                    Ovajeh.showUI();
+                                    await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.sad, Ovajeh.ƒS.positionPercent(20, 100));
+                                    await Ovajeh.ƒS.update(0);
+                                }
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.sad, Ovajeh.ƒS.positionPercent(80, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Ja, es ist schwer zu glauben... Aber du musst mir vertrauen.");
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.shocked, Ovajeh.ƒS.positionPercent(80, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Oh nein! Es ist gleich zu spät! Um das Portal zu öffnen, musst du eine Kreatur aus dieser Dimension beschwören.");
+                                await Ovajeh.say("shocked", 'Ich weiß aber gar nicht wie das gehen soll! Nichts davon stand auf den Buchseiten...');
+                                Ovajeh.showUI();
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.shocked, Ovajeh.ƒS.positionPercent(20, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Du musst mit einer Fackel der Opferung ein Feuer entzünden und die Kreatur besiegen, um ihre Essenz zu erlangen. Damit wird sich das Spiegelportal öffnen!");
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.normal, Ovajeh.ƒS.positionPercent(80, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Das Stuhlbein ist aus Holz der Spiegeldimension und auf dem Stoff sind magische Symbole eingraviert.");
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Zusammen bilden sie die Grundlage für die Opferungsfackel. Doch entfachen lässt sie sich nur mit Blut!");
+                                await Ovajeh.say("shocked", 'Die Fackel sollte kein Problem sein, aber gegen ein Monster aus einer anderen Dimension zu kämpfen?!');
+                                Ovajeh.showUI();
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.shocked, Ovajeh.ƒS.positionPercent(20, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.say("normal", 'Mir ist bewusst was auf dem Spiel steht. Ich werde die Waffe in die Hand nehmen und mit der Essenz zurückkehren.');
+                                Ovajeh.showUI();
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.normal, Ovajeh.ƒS.positionPercent(20, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.say("smile", 'Ich verspreche es dir! Bitte bring dich nicht noch mehr in Gefahr.');
+                                Ovajeh.showUI();
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.smile, Ovajeh.ƒS.positionPercent(20, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.smile, Ovajeh.ƒS.positionPercent(80, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Das ist meine Schwester! Ich wusste, dass ich auf dich zähl... ...");
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
+                                await Ovajeh.ƒS.update(1);
+                                await Ovajeh.say("shocked", '...');
+                                Ovajeh.showUI();
+                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.shocked, Ovajeh.ƒS.positionPercent(20, 100));
+                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.say("shocked", 'Michela?! Oh nein, ich muss mich unbedingt beeilen!');
+                                await Ovajeh.ƒS.Character.hide(Ovajeh.characters.protagonist);
                                 await Ovajeh.ƒS.update(0);
                             }
                             else {
-                                await Ovajeh.say("sad", 'Waffe? Davon höre ich zum ersten Mal! Ich werde sie noch finden, versprochen! Aber lediglich eine Chance? Oh je...');
-                                Ovajeh.showUI();
-                                await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.sad, Ovajeh.ƒS.positionPercent(20, 100));
-                                await Ovajeh.ƒS.update(0);
+                                await Ovajeh.say("sad", 'Ich habe die Verbindung zu ihr verloren... Sie wird sich nicht wieder melden. Ich muss zu ihr so schnell es geht!');
                             }
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.sad, Ovajeh.ƒS.positionPercent(80, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Ja, es ist schwer zu glauben... Aber du musst mir vertrauen.");
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.shocked, Ovajeh.ƒS.positionPercent(80, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Oh nein! Es ist gleich zu spät! Um das Portal zu öffnen, musst du eine Kreatur aus dieser Dimension beschwören.");
-                            await Ovajeh.say("shocked", 'Ich weiß aber gar nicht wie das gehen soll! Nichts davon stand auf den Buchseiten...');
-                            Ovajeh.showUI();
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.shocked, Ovajeh.ƒS.positionPercent(20, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Du musst mit einer Fackel der Opferung ein Feuer entzünden und die Kreatur besiegen, um ihre Essenz zu erlangen. Damit wird sich das Spiegelportal öffnen!");
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.normal, Ovajeh.ƒS.positionPercent(80, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Das Stuhlbein ist aus Holz der Spiegeldimension und auf dem Stoff sind magische Symbole eingraviert.");
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Zusammen bilden sie die Grundlage für die Opferungsfackel. Doch entfachen lässt sie sich nur mit Blut!");
-                            await Ovajeh.say("shocked", 'Die Fackel sollte kein Problem sein, aber gegen ein Monster aus einer anderen Dimension zu kämpfen?!');
-                            Ovajeh.showUI();
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.shocked, Ovajeh.ƒS.positionPercent(20, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.say("normal", 'Mir ist bewusst was auf dem Spiel steht. Ich werde die Waffe in die Hand nehmen und mit der Essenz zurückkehren.');
-                            Ovajeh.showUI();
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.normal, Ovajeh.ƒS.positionPercent(20, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.say("smile", 'Ich verspreche es dir! Bitte bring dich nicht noch mehr in Gefahr.');
-                            Ovajeh.showUI();
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.smile, Ovajeh.ƒS.positionPercent(20, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.michela, Ovajeh.characters.michela.pose.smile, Ovajeh.ƒS.positionPercent(80, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Das ist meine Schwester! Ich wusste, dass ich auf dich zähl... ...");
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.michela);
-                            await Ovajeh.ƒS.update(1);
-                            await Ovajeh.say("shocked", '...');
-                            Ovajeh.showUI();
-                            await Ovajeh.ƒS.Character.show(Ovajeh.characters.protagonist, Ovajeh.characters.protagonist.pose.shocked, Ovajeh.ƒS.positionPercent(20, 100));
-                            await Ovajeh.ƒS.update(0);
-                            await Ovajeh.say("shocked", 'Michela?! Oh nein, ich muss mich unbedingt beeilen!');
-                            await Ovajeh.ƒS.Character.hide(Ovajeh.characters.protagonist);
-                            await Ovajeh.ƒS.update(0);
                         }
                         else {
                             await Ovajeh.say("smile", 'Es wird Zeit...');
@@ -4548,10 +4574,11 @@ var Ovajeh;
                         Ovajeh.save.protagonist.experience += 10;
                         Ovajeh.checkExperience();
                         Ovajeh.sfx("complete");
-                        await Ovajeh.ƒS.Text.print("Stoff dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>10</span> XP</p>");
+                        await Ovajeh.ƒS.Text.print("Feder dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>10</span> XP</p>");
                     }
                     else {
                         console.log("window b");
+                        await Ovajeh.say("normal", 'Draußen ist nichts zu sehen weit und breit. Ich glaube aber nicht, dass ich noch so eine Feder finde.');
                     }
                 } // if y
             } // if x
@@ -4578,15 +4605,24 @@ var Ovajeh;
                     else {
                         console.log("secret b");
                         Ovajeh.sfx("confirm");
-                        if (Ovajeh.checkForItems("Code") == true) {
-                            await Ovajeh.say("smile", "Ich sollte alles haben, was ich benötige");
-                            Ovajeh.showUI();
-                            Ovajeh.codecheck();
+                        if (Ovajeh.mirrorRepaired === false) {
+                            if (Ovajeh.checkForItems("Scherbe") === false) {
+                                if (Ovajeh.checkForItems("Code") == true) {
+                                    await Ovajeh.say("smile", "Ich sollte alles haben, was ich benötige");
+                                    Ovajeh.showUI();
+                                    Ovajeh.codecheck();
+                                }
+                                else {
+                                    await Ovajeh.say("normal", 'Ich bin mir nicht sicher, ob ich den richtigen Code herausgefunden habe.');
+                                    Ovajeh.showUI();
+                                    Ovajeh.codecheck();
+                                }
+                            }
+                            else
+                                await Ovajeh.say("normal", 'Außer der Scherbe war dort nichts mehr drin.');
                         }
                         else {
-                            await Ovajeh.say("normal", 'Ich bin mir nicht sicher, ob ich den richtigen Code herausgefunden habe.');
-                            Ovajeh.showUI();
-                            Ovajeh.codecheck();
+                            await Ovajeh.say("smile", 'Also eines ist klar, bis jetzt ist noch keine neue Spiegelscherbe drin.');
                         }
                     }
                 } // if y
@@ -4599,7 +4635,7 @@ var Ovajeh;
                         console.log("exit1 a");
                         Ovajeh.exit1.visited = true;
                         await Ovajeh.say("normal", 'Da gehts wieder zurück zum Treppenhaus.');
-                        if (await Ovajeh.options("Zurück", "Bleiben") === true) {
+                        if (await Ovajeh.options("Treppenhaus", "Bleiben") === true) {
                             Ovajeh.ƒS.insert(Ovajeh.Scene_Intro);
                         }
                         else {
@@ -4608,7 +4644,7 @@ var Ovajeh;
                     }
                     else {
                         console.log("exit1 b");
-                        if (await Ovajeh.options("Zurück", "Bleiben") === true) {
+                        if (await Ovajeh.options("Treppenhaus", "Bleiben") === true) {
                             Ovajeh.ƒS.insert(Ovajeh.Scene_Intro);
                         }
                         else {
@@ -4625,7 +4661,7 @@ var Ovajeh;
                         console.log("exit2 a");
                         Ovajeh.exit2.visited = true;
                         await Ovajeh.say("normal", 'Soll ich wieder zurück?');
-                        if (await Ovajeh.options("Zurück", "Bleiben") === true) {
+                        if (await Ovajeh.options("Treppenhaus", "Bleiben") === true) {
                             Ovajeh.ƒS.insert(Ovajeh.Scene_Intro);
                         }
                         else {
@@ -4634,7 +4670,7 @@ var Ovajeh;
                     }
                     else {
                         console.log("exit2 b");
-                        if (await Ovajeh.options("Zurück", "Bleiben") === true) {
+                        if (await Ovajeh.options("Treppenhaus", "Bleiben") === true) {
                             Ovajeh.ƒS.insert(Ovajeh.Scene_Intro);
                         }
                         else {

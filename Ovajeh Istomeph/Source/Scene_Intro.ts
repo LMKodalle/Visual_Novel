@@ -63,6 +63,7 @@ namespace Ovajeh {
     export let doorOpen = false;
     export let windowNotice = false;
     export let gotKey = false;
+    export let knowWindow = false;
 
     // CLICKABLE POSITIONS
     export async function positions_intro(_event: MouseEvent) {
@@ -376,28 +377,31 @@ namespace Ovajeh {
                     } else {
                         console.log("window b");
                         sfx("confirm");
-                        if (checkForItems("Asche") === false) {
-                            await say("normal", "Nebel überall. Ich glaube der geht so schnell nicht wieder weg.")
-                            ƒS.Sound.play(sound.protagonist.misc[2], 0.5);
-                            await say("shocked", 'Igitt! Da ist ja ziemlich viel Dreck an der rechten unteren Ecke')
-                            if (await options("Genauer anschauen", "Igitt") === true) {
-                                await say("shocked", "Interessant! Vielleicht halluziniere ich gerade, aber der Dreck scheint eine perfekte Form zu bilden.")
-                                await say("normal", 'Könnte ein Buchstabe sein, oder eine Zahl...')
-                                windowNotice = true;
-                                if (chair.visited === true) {
-                                    await say("smile", 'Also den Umständen entsprechend ist dies nicht gerade uninteressant.')
-                                    await say("normal", "Wie beim Stuhlbein könnte hier die Liebe zum Detail genau richtig sein.")
-                                    await say("smile", 'Ich will damit nicht sagen, dass ich die Fensterscheibe mit Dreck einschmieren sollte...')
-                                    await say("happy", 'Aber vielleicht sollte ich es machen und schauen ob dann mehr zu erkennen ist.')
+                        if (knowWindow === false) {
+                            if (checkForItems("Asche") === false) {
+                                ƒS.Sound.play(sound.protagonist.misc[2], 0.5);
+                                await say("shocked", 'Igitt! Da ist ja ziemlich viel Dreck an der rechten unteren Ecke')
+                                if (await options("Genauer anschauen", "Igitt") === true) {
+                                    await say("shocked", "Interessant! Vielleicht halluziniere ich gerade, aber der Dreck scheint eine perfekte Form zu bilden.")
+                                    await say("normal", 'Könnte ein Buchstabe sein, oder eine Zahl...')
+                                    windowNotice = true;
+                                    if (chair.visited === true) {
+                                        await say("smile", 'Also den Umständen entsprechend ist dies nicht gerade uninteressant.')
+                                        await say("normal", "Wie beim Stuhlbein könnte hier die Liebe zum Detail genau richtig sein.")
+                                        await say("smile", 'Ich will damit nicht sagen, dass ich die Fensterscheibe mit Dreck einschmieren sollte...')
+                                        await say("happy", 'Aber vielleicht sollte ich es machen und schauen ob dann mehr zu erkennen ist.')
+                                    } else {
+                                        await say("normal", 'Naja, vielleicht nicht genau das, wonach ich suche. Ich behalte es mal im Hinterkopf')
+                                    }
                                 } else {
-                                    await say("normal", 'Naja, vielleicht nicht genau das, wonach ich suche. Ich behalte es mal im Hinterkopf')
+                                    await say("angry", 'Was mache ich hier auch und schaue mir den Dreck an den Fensterscheiben an.')
+                                    await say('normal', 'Ich wünschte, dass ich aus Dreck Gold machen könnte, also im Symbolischen Sinne.')
                                 }
                             } else {
-                                await say("angry", 'Was mache ich hier auch und schaue mir den Dreck an den Fensterscheiben an.')
-                                await say('normal', 'Ich wünschte, dass ich aus Dreck Gold machen könnte, also im Symbolischen Sinne.')
+                                await say('smile', 'Jetzt könnte ich endlich die Botschaft entziffern. Worauf warte ich noch?')
                             }
                         } else {
-                            await say('smile', 'Jetzt könnte ich endlich die Botschaft entziffern. Worauf warte ich noch?')
+                            await say("normal", "Nebel überall. Ich glaube der geht so schnell nicht wieder weg. Genauso wie der Dreck, igitt.")
                         }
                     }
                 }

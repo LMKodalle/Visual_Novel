@@ -230,10 +230,12 @@ namespace Ovajeh {
                         }
 
                     } else {
-                        console.log("secret b");
-                        await say("normal", 'Ich probiere mal...')
-                        showUI()
-                        numberCodeCheck();
+                        if (gotWeapon === false) {
+                            console.log("secret b");
+                            await say("normal", 'Ich probiere mal...')
+                            showUI()
+                            numberCodeCheck();
+                        } else await say("normal", 'Los ich muss weiter! Da ist nichts mehr drin.')
                     }
                 } // if y
             } // if x

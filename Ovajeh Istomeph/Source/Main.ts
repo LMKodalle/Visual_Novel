@@ -625,6 +625,7 @@ namespace Ovajeh {
       if (currentScene == "combat") {
         combat();
       }
+      selectedItemArray.shift();
     }
   }
 
@@ -728,12 +729,12 @@ namespace Ovajeh {
       return mR;
     },
     hero_crit: function () {
-      let cR = Math.floor(Math.random() * (15 - 11 + 1) + 11)/10
+      let cR = Math.floor(Math.random() * (15 - 11 + 1) + 11) / 10
       console.log(`hero weapon crit multiplier: ${cR}`);
       return cR;
     },
     enemy_crit: function (_enemyLVL: number) {
-      let cR = Math.floor(Math.random() * (15 - 11 + 1) + 11)/10 ;
+      let cR = Math.floor(Math.random() * (15 - 11 + 1) + 11) / 10;
       console.log(`enemy weapon crit multiplier: ${cR}`);
       return cR;
     }
@@ -1044,7 +1045,7 @@ namespace Ovajeh {
     Das Nächste, was ich sah, war mein Sturz durch die Sterne. Aufgeladen mit unbeschreiblicher Energie, landete ich schließlich in dieser Welt. Ich war ganz allein, kein Leben weit und breit. Keine Farben und pure Stille, nur mich Selbst und mein Wille.", "Ich habe eine ganze Ewigkeit geruht, bis ich mich erinnern konnte. Mein Wunsch, der in Erfüllung ging und meine Verantwortung, die ich damit zu erfüllen hatte. Damit lösten sich endlich die Ketten des Schlafes und ich war frei. Mit nur einem Gedankenstrom erweckte ich ganze Flüsse und damit Leben. \
     Doch schnell wurd mir klar, dass es keine Entwicklung gab. Das Leben stand still, lediglich einfache Organismen, die in Frieden koexistierten. Mein Wunsch wurde zum Fluch und mir wurde klar, welch ungeheuren Preis ich dafür zahlen musste. Ich war gezwungen, der Wahrheit ins Auge zu sehen. Es muss Opfer geben, damit \
     Großes entstehen kann. Ich wurde wütend, ich wurde bitter. Ich war verdammt zu einer Ewigkeit des Stillstands. Jeder Organismus kümmerte in Einsamkeit vor sich rum. Es gab keinen Grund für Zusammenschluss, kein Grund zur Sorge. Keine einzige Zelle hat sich fortbewegt, keine wurde krank. Nichts wurde probiert, nichts wurde gelernt. \
-    Es war die Hölle im Paradies. Doch ich war nicht zu mehr in der Lage, meine Kräfte waren gebunden an meine Werte.","Lange habe ich in meinem Geiste verbracht und über eine Lösung philosophiert. Manchmal muss man zurück ans Ende, um neu zu starten. Am Ende meines weltlichen Lebens war ich bereit alles loszulassen, weil ich die Antwort für mich fand, als ich tief in meine Seele hinab blickte. Was ich dort fand hat mich in Rage versetzt. Es hat mich angewidert, ich wollte es los werden. \
+    Es war die Hölle im Paradies. Doch ich war nicht zu mehr in der Lage, meine Kräfte waren gebunden an meine Werte.", "Lange habe ich in meinem Geiste verbracht und über eine Lösung philosophiert. Manchmal muss man zurück ans Ende, um neu zu starten. Am Ende meines weltlichen Lebens war ich bereit alles loszulassen, weil ich die Antwort für mich fand, als ich tief in meine Seele hinab blickte. Was ich dort fand hat mich in Rage versetzt. Es hat mich angewidert, ich wollte es los werden. \
     Denn was ich dort fand, war mich selbst. All meine Fehler, die mich kleinste Entscheidungen in große Katastrophen verwandeln ließen. Das Streben nach Perfektion, nach Frieden und Gesundheit, all das hat mich heruntergezogen. Als ich mich dazu entschied, dies alles hinter mir zu lassen, erst dann habe ich wirklich bekommen, was ich immer wollte. \
     Doch am Ende hat es mich wieder eingeholt. War es der Frieden zwischen Lebenwesen, den ich wirklich wollte? Oder war es doch der innere Frieden? Ich zögerte nicht lange und verspiegelte die Barrieren meiner Welt. Das Chaos brach aus, als sich die Organismen begannen selbst zu hassen und zu zerstören. \
     Manche begannen sich auf eine Weise zu verformen, die ich unmöglich hätte vorhersehen können. Ein paar dieser Kreaturen schafften auszubrechen, aber niemals ohne die Hilfe von außerhalb."
@@ -1080,6 +1081,7 @@ namespace Ovajeh {
       await say("smile", 'Die fehlende Spiegelscherbe. Hab ich mir doch fast gedacht!')
       await say("happy", 'Endlich halte ich den Schlüssel zu einer anderen Welt in meinen Händen! Jetzt brauche ich Antworten... Viele!')
       ƒS.Inventory.add(items.Scherbe);
+      document.getElementById("Code").remove();
       save.protagonist.experience += 30
       checkExperience();
       sfx("complete");
@@ -1109,6 +1111,8 @@ namespace Ovajeh {
       await say("angry", 'Die Waffe wird dort wahrscheinlich sehr wertvoll sein. Wer weiß schon welche unheimlichen Dinge dort passieren könnten?')
       await say("normal", 'Ich nehme sie erstmal mit. So oder so werde ich Adam deshalb zur Rede stellen.')
       sfx("complete");
+      document.getElementById("Taschenuhr").remove();
+      document.getElementById("Notiz").remove();
       craftWeaponHero();
       save.protagonist.experience += 50;
       await ƒS.Text.print("Waffe dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>50</span> XP</p>")
@@ -1548,6 +1552,9 @@ namespace Ovajeh {
           case `${items.Opferfackel.name}`:
             await ƒS.Text.print(`${items.Opferfackel.examine}`)
             break;
+          case `${items.Schlüssel.name}`:
+            await ƒS.Text.print(`${items.Schlüssel.examine}`)
+            break;
           case `${items.Reißzwecke.name}`:
             await ƒS.Text.print(`${items.Reißzwecke.examine}`)
             break;
@@ -1563,12 +1570,12 @@ namespace Ovajeh {
             save.protagonist.experience += 20;
             await ƒS.Text.print("Taschenuhr dem Inventar hinzugefügt<hr class='golden'></hr><br><p>+ <span style='color: green'>20</span> XP</p>");
             checkExperience();
+            document.getElementById("Buch").remove();
+            await ƒS.Text.print("Buch aus dem Inventar gelöscht<hr class='golden'></hr>")
             break;
           case `${items.Taschenuhr.name}`:
             if (watchCheckable === false) {
               await ƒS.Text.print(`${items.Taschenuhr.examine}`)
-              document.getElementById("Buch").remove();
-              await ƒS.Text.print("Buch aus dem Inventar gelöscht<hr class='golden'></hr>")
             } else {
               await ƒS.Text.print(`${items.Taschenuhr.examine2}`);
             }
@@ -1653,7 +1660,8 @@ namespace Ovajeh {
                 save.protagonist.experience += 10;
                 checkExperience()
                 sfx("complete");
-                await ƒS.Text.print("Blut aus dem Inventar gelöscht<hr class='golden'></hr> <br><p>+ <span style='color: green'>10</span> XP</p>")
+                ƒS.Inventory.add(items.Blut);
+                await ƒS.Text.print("Blut dem Inventar hinzugefügt<hr class='golden'></hr> <br><p>+ <span style='color: green'>10</span> XP</p>")
               } else {
                 sfx("confirm");
                 await say("smile", 'Vielleicht muss ich später noch etwas mit Blut unterzeichnen. Man kann nie genug vorbereitet sein.')
@@ -1722,6 +1730,7 @@ namespace Ovajeh {
               await say("normal", 'Ich muss unbedingt mehr über diese "Fackel" herausfinden.')
               await say("normal", "Wenn ich einfach weiter diesen Botschaften folge, dann erschließt sich mir das Ganze bestimmt.");
               document.getElementById("Asche").remove();
+              knowWindow = true;
               save.protagonist.experience += 10;
               checkExperience()
               sfx("complete");
@@ -1852,7 +1861,7 @@ namespace Ovajeh {
       let str = (_event.target as HTMLLIElement).id;
       switch (use) {
         // ITEMS TO USE WHILE IN INVENTORY
-        
+
         // Asche
         case `${items.Asche.name}`:
           // console.log(_event.target)
@@ -1861,7 +1870,7 @@ namespace Ovajeh {
             console.log("same item");
             use = undefined;
             sfx("no");
-          } 
+          }
           break;
 
         // Scherbe
@@ -1872,7 +1881,7 @@ namespace Ovajeh {
             console.log("same item");
             use = undefined;
             sfx("no");
-          } 
+          }
           break;
 
         // Spiegelessenz
@@ -1883,7 +1892,7 @@ namespace Ovajeh {
             console.log("same item");
             use = undefined;
             sfx("no");
-          } 
+          }
           break;
 
         // Schlüssel
@@ -1894,7 +1903,7 @@ namespace Ovajeh {
             console.log("same item");
             use = undefined;
             sfx("no");
-          } 
+          }
           break;
 
         // Opferungsfackel
@@ -1905,7 +1914,7 @@ namespace Ovajeh {
             console.log("same item");
             use = undefined;
             sfx("no");
-          } 
+          }
           break;
 
         // Blutsfeder
@@ -1927,7 +1936,7 @@ namespace Ovajeh {
             console.log("same item");
             use = undefined;
             sfx("no");
-          } 
+          }
           break;
 
         // Fackel
@@ -1985,6 +1994,7 @@ namespace Ovajeh {
           if (currentScene == "combat") {
             combat();
           }
+          selectedItemArray.shift();
         }
         break;
       case ƒ.KEYBOARD_CODE.ESC:
@@ -1997,6 +2007,7 @@ namespace Ovajeh {
         if (currentScene == "combat") {
           combat();
         }
+        selectedItemArray.shift();
         break;
     }
   }

@@ -59,6 +59,7 @@ namespace Ovajeh {
 
     export let mirrorRepaired = false;
     export let mirrorOpened = false;
+    export let michelaVisited = false;
 
     // CLICKABLE POSITIONS
     export async function positions_mirror_room(_event: MouseEvent) {
@@ -197,103 +198,107 @@ namespace Ovajeh {
                             await say("shocked", 'Ich glaube, da war gerade jemand hinter mir im Spiegel!')
                             await say("shocked", 'Eine dunkle Gestalt! Oh nein, hier stimmt was ganz und gar nicht!')
                         } else if (mirrorOpened === false) {
-                            await say("normal", "... Hmmm ...");
-                            ƒS.Sound.play(sound.protagonist.misc[2], 0.5);
-                            await say("shocked", "!!!!!!!!");
-                            await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.shocked, ƒS.positionPercent(20, 100));
-                            await ƒS.update(0);
-                            showUI()
-                            await ƒS.Character.animate(characters.michela, characters.michela.pose.smile, canvasBottomEntry());
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, `Hallo ${save.protagonist.name}! Du hast bestimmt viele Fragen.`); showUI()
-                            await say("happy", 'Michela! Ich bin so verdammt froh dich zu sehen! Und wie ich Fragen habe! Du und Adam haben ganz schön was zu erzählen.'); showUI()
-                            await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.happy, ƒS.positionPercent(20, 100));
-                            await ƒS.update(0);
-                            await ƒS.Character.hide(characters.michela);
-                            await ƒS.Character.show(characters.michela, characters.michela.pose.happy, ƒS.positionPercent(80, 100));
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Ich freue mich auch sehr dich zu sehen! Das bedeutet, dass du meinen Hinweisen richtig gefolgt bist."); showUI()
-                            await ƒS.Character.hide(characters.michela);
-                            await ƒS.Character.show(characters.michela, characters.michela.pose.sad, ƒS.positionPercent(80, 100));
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Am liebsten würde ich dir alles erzählen, aber die Zeit drängt und ich bin in großer Gefahr!");
-                            await say("shocked", 'Oh mein Gott! Geht es dir gut!? Was ist mit Adam? Wie kann ich zu euch gelangen, um euch zu retten?'); showUI()
-                            await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.shocked, ƒS.positionPercent(20, 100));
-                            await ƒS.update(0);
-                            await ƒS.Character.hide(characters.michela);
-                            await ƒS.Character.show(characters.michela, characters.michela.pose.angry, ƒS.positionPercent(80, 100));
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Adam... Er ist der Grund, weshalb ich hier gefangen bin! Ich konnte es auch nicht fassen, aber du musst mir jetzt genau zuhören!");
-                            await say("sad", 'Adam hat dich entführt!? Ich hatte schon so eine Vermutung, aber konnte es mir nicht zusammenreimen.'); showUI()
-                            await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.sad, ƒS.positionPercent(20, 100));
-                            await ƒS.update(0);
-                            await ƒS.Character.hide(characters.michela);
-                            await ƒS.Character.show(characters.michela, characters.michela.pose.sad, ƒS.positionPercent(80, 100));
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Er ist in Wirklichkeit nicht die Person, die er all die Jahre vorgab zu sein.");
-                            await ƒS.Character.hide(characters.michela);
-                            await ƒS.Character.show(characters.michela, characters.michela.pose.shocked, ƒS.positionPercent(80, 100));
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Ich erkläre dir alles wenn du hier drüben bist, jetzt musst du so schnell wie möglich das Portal öffnen bevor es zu spät ist!");
-                            await say("shocked", 'Zu spät? Was meinst du damit?! Werden wir dann nicht beide gefangen sein?'); showUI()
-                            await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.shocked, ƒS.positionPercent(20, 100));
-                            await ƒS.update(0);
-                            await ƒS.Character.hide(characters.michela);
-                            await ƒS.Character.show(characters.michela, characters.michela.pose.angry, ƒS.positionPercent(80, 100));
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Es ist Adam! Sobald er herausfindet, dass ich dir im Geheimen Botschaften übermittelt habe...");
-                            await ƒS.Character.hide(characters.michela);
-                            await ƒS.Character.show(characters.michela, characters.michela.pose.shocked, ƒS.positionPercent(80, 100));
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Dann wird er alles in Gang setzen, um jede Verbindung zu dieser Welt zu schließen!");
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Damit wir beide eine Chance haben, musst du unbedingt seine Waffe mitnehmen! Du hast sie doch hoffentlich gefunden?");
-                            if (gotWeapon === true) {
-                                await say("sad", 'Eine Chance? Du machst mir extrem viel Angst gerade! Aber ja, ich habe die Waffe gefunden. Was hat das zu bedeuten?'); showUI()
+                            if (michelaVisited === false) {
+                                await say("normal", "... Hmmm ...");
+                                ƒS.Sound.play(sound.protagonist.misc[2], 0.5);
+                                await say("shocked", "!!!!!!!!");
+                                await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.shocked, ƒS.positionPercent(20, 100));
+                                await ƒS.update(0);
+                                showUI()
+                                await ƒS.Character.animate(characters.michela, characters.michela.pose.smile, canvasBottomEntry());
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, `Hallo ${save.protagonist.name}! Du hast bestimmt viele Fragen.`); showUI()
+                                await say("happy", 'Michela! Ich bin so verdammt froh dich zu sehen! Und wie ich Fragen habe! Du und Adam haben ganz schön was zu erzählen.'); showUI()
+                                await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.happy, ƒS.positionPercent(20, 100));
+                                await ƒS.update(0);
+                                await ƒS.Character.hide(characters.michela);
+                                await ƒS.Character.show(characters.michela, characters.michela.pose.happy, ƒS.positionPercent(80, 100));
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Ich freue mich auch sehr dich zu sehen! Das bedeutet, dass du meinen Hinweisen richtig gefolgt bist."); showUI()
+                                await ƒS.Character.hide(characters.michela);
+                                await ƒS.Character.show(characters.michela, characters.michela.pose.sad, ƒS.positionPercent(80, 100));
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Am liebsten würde ich dir alles erzählen, aber die Zeit drängt und ich bin in großer Gefahr!");
+                                await say("shocked", 'Oh mein Gott! Geht es dir gut!? Was ist mit Adam? Wie kann ich zu euch gelangen, um euch zu retten?'); showUI()
+                                await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.shocked, ƒS.positionPercent(20, 100));
+                                await ƒS.update(0);
+                                await ƒS.Character.hide(characters.michela);
+                                await ƒS.Character.show(characters.michela, characters.michela.pose.angry, ƒS.positionPercent(80, 100));
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Adam... Er ist der Grund, weshalb ich hier gefangen bin! Ich konnte es auch nicht fassen, aber du musst mir jetzt genau zuhören!");
+                                await say("sad", 'Adam hat dich entführt!? Ich hatte schon so eine Vermutung, aber konnte es mir nicht zusammenreimen.'); showUI()
                                 await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.sad, ƒS.positionPercent(20, 100));
+                                await ƒS.update(0);
+                                await ƒS.Character.hide(characters.michela);
+                                await ƒS.Character.show(characters.michela, characters.michela.pose.sad, ƒS.positionPercent(80, 100));
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Er ist in Wirklichkeit nicht die Person, die er all die Jahre vorgab zu sein.");
+                                await ƒS.Character.hide(characters.michela);
+                                await ƒS.Character.show(characters.michela, characters.michela.pose.shocked, ƒS.positionPercent(80, 100));
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Ich erkläre dir alles wenn du hier drüben bist, jetzt musst du so schnell wie möglich das Portal öffnen bevor es zu spät ist!");
+                                await say("shocked", 'Zu spät? Was meinst du damit?! Werden wir dann nicht beide gefangen sein?'); showUI()
+                                await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.shocked, ƒS.positionPercent(20, 100));
+                                await ƒS.update(0);
+                                await ƒS.Character.hide(characters.michela);
+                                await ƒS.Character.show(characters.michela, characters.michela.pose.angry, ƒS.positionPercent(80, 100));
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Es ist Adam! Sobald er herausfindet, dass ich dir im Geheimen Botschaften übermittelt habe...");
+                                await ƒS.Character.hide(characters.michela);
+                                await ƒS.Character.show(characters.michela, characters.michela.pose.shocked, ƒS.positionPercent(80, 100));
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Dann wird er alles in Gang setzen, um jede Verbindung zu dieser Welt zu schließen!");
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Damit wir beide eine Chance haben, musst du unbedingt seine Waffe mitnehmen! Du hast sie doch hoffentlich gefunden?");
+                                if (gotWeapon === true) {
+                                    await say("sad", 'Eine Chance? Du machst mir extrem viel Angst gerade! Aber ja, ich habe die Waffe gefunden. Was hat das zu bedeuten?'); showUI()
+                                    await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.sad, ƒS.positionPercent(20, 100));
+                                    await ƒS.update(0);
+                                } else {
+                                    await say("sad", 'Waffe? Davon höre ich zum ersten Mal! Ich werde sie noch finden, versprochen! Aber lediglich eine Chance? Oh je...'); showUI()
+                                    await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.sad, ƒS.positionPercent(20, 100));
+                                    await ƒS.update(0);
+                                }
+                                await ƒS.Character.hide(characters.michela);
+                                await ƒS.Character.show(characters.michela, characters.michela.pose.sad, ƒS.positionPercent(80, 100));
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Ja, es ist schwer zu glauben... Aber du musst mir vertrauen.");
+                                await ƒS.Character.hide(characters.michela);
+                                await ƒS.Character.show(characters.michela, characters.michela.pose.shocked, ƒS.positionPercent(80, 100));
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Oh nein! Es ist gleich zu spät! Um das Portal zu öffnen, musst du eine Kreatur aus dieser Dimension beschwören.");
+                                await say("shocked", 'Ich weiß aber gar nicht wie das gehen soll! Nichts davon stand auf den Buchseiten...'); showUI()
+                                await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.shocked, ƒS.positionPercent(20, 100));
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Du musst mit einer Fackel der Opferung ein Feuer entzünden und die Kreatur besiegen, um ihre Essenz zu erlangen. Damit wird sich das Spiegelportal öffnen!");
+                                await ƒS.Character.hide(characters.michela);
+                                await ƒS.Character.show(characters.michela, characters.michela.pose.normal, ƒS.positionPercent(80, 100));
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Das Stuhlbein ist aus Holz der Spiegeldimension und auf dem Stoff sind magische Symbole eingraviert.");
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Zusammen bilden sie die Grundlage für die Opferungsfackel. Doch entfachen lässt sie sich nur mit Blut!");
+                                await say("shocked", 'Die Fackel sollte kein Problem sein, aber gegen ein Monster aus einer anderen Dimension zu kämpfen?!'); showUI()
+                                await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.shocked, ƒS.positionPercent(20, 100));
+                                await ƒS.update(0);
+                                await say("normal", 'Mir ist bewusst was auf dem Spiel steht. Ich werde die Waffe in die Hand nehmen und mit der Essenz zurückkehren.'); showUI()
+                                await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.normal, ƒS.positionPercent(20, 100));
+                                await ƒS.update(0);
+                                await say("smile", 'Ich verspreche es dir! Bitte bring dich nicht noch mehr in Gefahr.'); showUI()
+                                await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.smile, ƒS.positionPercent(20, 100));
+                                await ƒS.update(0);
+                                await ƒS.Character.hide(characters.michela);
+                                await ƒS.Character.show(characters.michela, characters.michela.pose.smile, ƒS.positionPercent(80, 100));
+                                await ƒS.update(0);
+                                await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Das ist meine Schwester! Ich wusste, dass ich auf dich zähl... ...");
+                                await ƒS.Character.hide(characters.michela)
+                                await ƒS.update(1);
+                                await say("shocked", '...'); showUI()
+                                await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.shocked, ƒS.positionPercent(20, 100));
+                                await ƒS.update(0);
+                                await say("shocked", 'Michela?! Oh nein, ich muss mich unbedingt beeilen!');
+                                await ƒS.Character.hide(characters.protagonist);
                                 await ƒS.update(0);
                             } else {
-                                await say("sad", 'Waffe? Davon höre ich zum ersten Mal! Ich werde sie noch finden, versprochen! Aber lediglich eine Chance? Oh je...'); showUI()
-                                await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.sad, ƒS.positionPercent(20, 100));
-                                await ƒS.update(0);
+                                await say("sad", 'Ich habe die Verbindung zu ihr verloren... Sie wird sich nicht wieder melden. Ich muss zu ihr so schnell es geht!')
                             }
-                            await ƒS.Character.hide(characters.michela);
-                            await ƒS.Character.show(characters.michela, characters.michela.pose.sad, ƒS.positionPercent(80, 100));
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Ja, es ist schwer zu glauben... Aber du musst mir vertrauen.");
-                            await ƒS.Character.hide(characters.michela);
-                            await ƒS.Character.show(characters.michela, characters.michela.pose.shocked, ƒS.positionPercent(80, 100));
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Oh nein! Es ist gleich zu spät! Um das Portal zu öffnen, musst du eine Kreatur aus dieser Dimension beschwören.");
-                            await say("shocked", 'Ich weiß aber gar nicht wie das gehen soll! Nichts davon stand auf den Buchseiten...'); showUI()
-                            await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.shocked, ƒS.positionPercent(20, 100));
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Du musst mit einer Fackel der Opferung ein Feuer entzünden und die Kreatur besiegen, um ihre Essenz zu erlangen. Damit wird sich das Spiegelportal öffnen!");
-                            await ƒS.Character.hide(characters.michela);
-                            await ƒS.Character.show(characters.michela, characters.michela.pose.normal, ƒS.positionPercent(80, 100));
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Das Stuhlbein ist aus Holz der Spiegeldimension und auf dem Stoff sind magische Symbole eingraviert.");
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Zusammen bilden sie die Grundlage für die Opferungsfackel. Doch entfachen lässt sie sich nur mit Blut!");
-                            await say("shocked", 'Die Fackel sollte kein Problem sein, aber gegen ein Monster aus einer anderen Dimension zu kämpfen?!'); showUI()
-                            await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.shocked, ƒS.positionPercent(20, 100));
-                            await ƒS.update(0);
-                            await say("normal", 'Mir ist bewusst was auf dem Spiel steht. Ich werde die Waffe in die Hand nehmen und mit der Essenz zurückkehren.'); showUI()
-                            await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.normal, ƒS.positionPercent(20, 100));
-                            await ƒS.update(0);
-                            await say("smile", 'Ich verspreche es dir! Bitte bring dich nicht noch mehr in Gefahr.'); showUI()
-                            await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.smile, ƒS.positionPercent(20, 100));
-                            await ƒS.update(0);
-                            await ƒS.Character.hide(characters.michela);
-                            await ƒS.Character.show(characters.michela, characters.michela.pose.smile, ƒS.positionPercent(80, 100));
-                            await ƒS.update(0);
-                            await ƒS.Speech.tell(`<span style="color: darkblue">Michela</span>`, "Das ist meine Schwester! Ich wusste, dass ich auf dich zähl... ...");
-                            await ƒS.Character.hide(characters.michela)
-                            await ƒS.update(1);
-                            await say("shocked", '...'); showUI()
-                            await ƒS.Character.show(characters.protagonist, characters.protagonist.pose.shocked, ƒS.positionPercent(20, 100));
-                            await ƒS.update(0);
-                            await say("shocked", 'Michela?! Oh nein, ich muss mich unbedingt beeilen!');
-                            await ƒS.Character.hide(characters.protagonist);
-                            await ƒS.update(0);
                         } else {
                             await say("smile", 'Es wird Zeit...')
                             if (await options("Spiegelwelt betreten", "Noch nicht") === true) {
@@ -365,9 +370,10 @@ namespace Ovajeh {
                         save.protagonist.experience += 10
                         checkExperience();
                         sfx("complete");
-                        await ƒS.Text.print("Stoff dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>10</span> XP</p>");
+                        await ƒS.Text.print("Feder dem Inventar hinzugefügt <hr class='golden'></hr> <br><p>+ <span style='color: green'>10</span> XP</p>");
                     } else {
                         console.log("window b");
+                        await say("normal", 'Draußen ist nichts zu sehen weit und breit. Ich glaube aber nicht, dass ich noch so eine Feder finde.')
                     }
                 } // if y
             } // if x
@@ -393,14 +399,20 @@ namespace Ovajeh {
                     } else {
                         console.log("secret b");
                         sfx("confirm");
-                        if (checkForItems("Code") == true) {
-                            await say("smile", "Ich sollte alles haben, was ich benötige");
-                            showUI()
-                            codecheck();
+                        if (mirrorRepaired === false) {
+                            if (checkForItems("Scherbe") === false) {
+                                if (checkForItems("Code") == true) {
+                                    await say("smile", "Ich sollte alles haben, was ich benötige");
+                                    showUI()
+                                    codecheck();
+                                } else {
+                                    await say("normal", 'Ich bin mir nicht sicher, ob ich den richtigen Code herausgefunden habe.')
+                                    showUI();
+                                    codecheck();
+                                }
+                            } else await say("normal", 'Außer der Scherbe war dort nichts mehr drin.')
                         } else {
-                            await say("normal", 'Ich bin mir nicht sicher, ob ich den richtigen Code herausgefunden habe.')
-                            showUI();
-                            codecheck();
+                            await say("smile", 'Also eines ist klar, bis jetzt ist noch keine neue Spiegelscherbe drin.')
                         }
                     }
                 } // if y
@@ -414,14 +426,14 @@ namespace Ovajeh {
                         console.log("exit1 a");
                         exit1.visited = true;
                         await say("normal", 'Da gehts wieder zurück zum Treppenhaus.');
-                        if (await options("Zurück", "Bleiben") === true) {
+                        if (await options("Treppenhaus", "Bleiben") === true) {
                             ƒS.insert(Scene_Intro);
                         } else {
                             await say("normal", 'Ich sollte mich erstmal auf diesen Raum konzentrieren');
                         }
                     } else {
                         console.log("exit1 b");
-                        if (await options("Zurück", "Bleiben") === true) {
+                        if (await options("Treppenhaus", "Bleiben") === true) {
                             ƒS.insert(Scene_Intro);
                         } else {
                             await say("normal", 'Erstmal bleib ich hier.');
@@ -438,14 +450,14 @@ namespace Ovajeh {
                         console.log("exit2 a");
                         exit2.visited = true;
                         await say("normal", 'Soll ich wieder zurück?');
-                        if (await options("Zurück", "Bleiben") === true) {
+                        if (await options("Treppenhaus", "Bleiben") === true) {
                             ƒS.insert(Scene_Intro);
                         } else {
                             await say("normal", 'Besser ich suche hier noch weiter.');
                         }
                     } else {
                         console.log("exit2 b");
-                        if (await options("Zurück", "Bleiben") === true) {
+                        if (await options("Treppenhaus", "Bleiben") === true) {
                             ƒS.insert(Scene_Intro);
                         } else {
                             await say("normal", 'Noch nicht.');
